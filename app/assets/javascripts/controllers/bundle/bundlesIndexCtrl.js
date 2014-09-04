@@ -3,44 +3,41 @@
 // Bundles controller
 RFSBundleDB.controller('BundlesIndexCtrl', function($rootScope, $scope, $filter, $resource, $timeout,
                                                     loadBundles, ngTableParams) {
-
         $rootScope.highlight = 'bundles';
 
         console.log("BUNDLES Index CONTROLLER");
-
-        //$scope.bundles = loadBundles; //$resource("/api/bundles.json").query();
-
-        $scope.sortField = 'title';
 
         var data = $resource('/api/bundles.json').query();
 
         $scope.tableParams = new ngTableParams({
             page: 1,            // show first page
-            count: 10           // count per page
+            count: 15           // count per page
         }, {
             total: data.length, // length of data
             getData: function($defer, params) {
                 // use build-in angular filter
-                var orderedData = params.filter() ?
+                var filteredData = params.filter() ?
                     $filter('filter')(data, params.filter()) :
                     data;
-
-                $scope.users = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                var orderedData = params.sorting() ?
+                    $filter('orderBy')(filteredData, params.orderBy()) :
+                    data;
 
                 params.total(orderedData.length); // set total for recalc pagination
-                $defer.resolve($scope.users);
+                $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+
+            },
+            counts: [5,10,25,50,100],
+            sorting: {
+                games_count: 'asc'     // initial sorting
             }
+
         });
 
-        /* kind of hacky and causes errors, but it's the only way to make the pagination work with sorting on the fly */
-//        $scope.$watch(function () {
-//            return $filter('filter')($scope.bundles, $scope.query);
-//        }, function (val) {
-//            $scope.filtered = val;
-//        });
+        $scope.$watch('[tableParams.$params, tableParams.data]', function () {
+            $scope.tableParams.reload();
+        });
 
-//        $scope.filtered = [];
-//
 //        $scope.gamesCount = function(){
 //            var count = 0;
 //            for(var i=0; i < $scope.filtered.length; i++) {

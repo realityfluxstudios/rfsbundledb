@@ -1,34 +1,30 @@
-<!--suppress HtmlUnknownAttribute -->
+<h1>Bundles</h1>
 
-    <h1>Bundles</h1>
-    <!--<div ng-show="filtered.length > 0">-->
-        <!--Bundles: {{ filtered.length }} <br />-->
-        <!--Games: {{ gamesCount() }} <br />-->
-        <!--Android Games: {{ androidGamesCount() }}<br />-->
-        <!--DRM Free Games: {{ drmFreeGamesCount() }}<br />-->
-        <!--Music Tracks: {{ musicTracksCount() }}<br />-->
-    <!--</div>-->
+<button ng-click="tableParams.sorting({})" class="btn btn-default pull-right">Clear sorting</button>
+<button ng-click="tableParams.filter({})" class="btn btn-default pull-right">Clear filter</button>
+<p><strong>Sorting:</strong> {{tableParams.sorting()|json}}
+<p><strong>Filter:</strong> {{tableParams.filter()|json}}
 
 <table ng-table="tableParams" show-filter="true" class="table table-responsive table-striped table-condensed table-hover">
-    <thead>
-    <tr>
-        <th>Title</th>
-        <th>Site</th>
-        <th>Games</th>
-        <th>Android Games</th>
-        <th>DRM Free Games</th>
-        <th>Music Tracks</th>
-    </tr>
-    </thead>
-    <tbody>
+    <!--<thead>-->
+    <!--<tr>-->
+        <!--<th>Title</th>-->
+        <!--<th>Site</th>-->
+        <!--<th>Games</th>-->
+        <!--<th>Android Games</th>-->
+        <!--<th>DRM Free Games</th>-->
+        <!--<th>Music Tracks</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <!--<tbody>-->
     <tr ng-repeat="bundle in $data">
-        <td><a ui-sref="bundleView({titleSlug: bundle.title_slug})">{{ bundle.title }}</a></td>
-        <td>{{ bundle.site }}</td>
-        <td style="text-align:center">{{ bundle.games_count }}</td>
-        <td style="text-align:center">{{ bundle.androidgames_count }}</td>
-        <td style="text-align:center">{{ bundle.drmfreegames_count }}</td>
-        <td style="text-align:center">{{ bundle.musictracks_count }}</td>
+        <td data-title="'Title'" sortable="'title'" filter="{ 'title': 'text' }"><a ui-sref="bundleView({titleSlug: bundle.title_slug})">{{ bundle.title }}</a></td>
+        <td data-title="'Site'" sortable="'site'" filter="{ 'site': 'text' }">{{ bundle.site }}</td>
+        <td data-title="'Game Count'" sortable="'games_count'" filter="{ 'games_count': 'text' }">{{ bundle.games_count }}</td>
+        <td data-title="'Android Game Count'" sortable="'androidgames_count'" filter="{ 'androidgames_count': 'text' }">{{ bundle.androidgames_count }}</td>
+        <td data-title="'DRM Free Game Count'" sortable="'drmfreegames_count'" filter="{ 'drmfreegames_count': 'text' }">{{ bundle.drmfreegames_count }}</td>
+        <td data-title="'Audio Count'" sortable="'musictracks_count'" filter="{ 'musictracks_count': 'text' }">{{ bundle.musictracks_count }}</td>
     </tr>
-    </tbody>
+    <!--</tbody>-->
 </table>
 
