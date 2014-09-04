@@ -1,21 +1,39 @@
 'use strict';
 
-RFSBundleDB.controller('GamesIndexCtrl', function ($rootScope, $scope, $resource, $filter, loadGames) {
+RFSBundleDB.controller('GamesIndexCtrl', function ($rootScope, $scope, $filter,
+                                                   $resource, $timeout, loadGames, ngTableParams) {
 
-    $scope.games = loadGames;
+    var data = loadGames;
 
     $rootScope.highlight = 'games';
 
-    $scope.sortField = 'title';
+    $scope.tableParams = new ngTableParams({
+        page: 1,            // show first page
+        count: 10           // count per page
+    }, {
+        sorting: {
+            title: 'asc'     // initial sorting
+        },
+        total: data.length, // length of data
+        getData: function($defer, params) {
+            // use build-in angular filter
+            var filteredData = params.filter() ?
+                $filter('filter')(data, params.filter()) :
+                data;
+            var orderedData = params.sorting() ?
+                $filter('orderBy')(filteredData, params.orderBy()) :
+                data;
 
-    /* kind of hacky and causes errors, but it's the only way to make the pagination work with sorting on the fly */
-    $scope.$watch(function () {
-        return $filter('filter')($scope.games, $scope.query);
-    }, function (val) {
-        $scope.filteredGames = val;
+            params.total(orderedData.length); // set total for recalc pagination
+            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+
+        },
+        counts: [5,10,25,50,100]
     });
 
-    $scope.filteredGames = [];
+    $scope.$watch('[tableParams.$params, tableParams.data]', function () {
+        $scope.tableParams.reload();
+    });
 
     $scope.keyCount = function () {
         var count = 0;

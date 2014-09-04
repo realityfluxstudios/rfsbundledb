@@ -1,18 +1,21 @@
 'use strict';
 
 // Bundles controller
-RFSBundleDB.controller('BundlesIndexCtrl', function($rootScope, $scope, $filter, $resource, $timeout,
-                                                    loadBundles, ngTableParams) {
+RFSBundleDB.controller('BundlesIndexCtrl', function($rootScope, $scope, $filter,
+                                                    $resource, $timeout, loadBundles, ngTableParams) {
         $rootScope.highlight = 'bundles';
 
         console.log("BUNDLES Index CONTROLLER");
 
-        var data = $resource('/api/bundles.json').query();
+        var data = loadBundles;
 
         $scope.tableParams = new ngTableParams({
             page: 1,            // show first page
-            count: 15           // count per page
+            count: 10           // count per page
         }, {
+            sorting: {
+                title: 'asc'     // initial sorting
+            },
             total: data.length, // length of data
             getData: function($defer, params) {
                 // use build-in angular filter
@@ -27,11 +30,7 @@ RFSBundleDB.controller('BundlesIndexCtrl', function($rootScope, $scope, $filter,
                 $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
 
             },
-            counts: [5,10,25,50,100],
-            sorting: {
-                games_count: 'asc'     // initial sorting
-            }
-
+            counts: [5,10,25,50,100]
         });
 
         $scope.$watch('[tableParams.$params, tableParams.data]', function () {

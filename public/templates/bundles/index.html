@@ -2,21 +2,8 @@
 
 <button ng-click="tableParams.sorting({})" class="btn btn-default pull-right">Clear sorting</button>
 <button ng-click="tableParams.filter({})" class="btn btn-default pull-right">Clear filter</button>
-<p><strong>Sorting:</strong> {{tableParams.sorting()|json}}
-<p><strong>Filter:</strong> {{tableParams.filter()|json}}
 
 <table ng-table="tableParams" show-filter="true" class="table table-responsive table-striped table-condensed table-hover">
-    <!--<thead>-->
-    <!--<tr>-->
-        <!--<th>Title</th>-->
-        <!--<th>Site</th>-->
-        <!--<th>Games</th>-->
-        <!--<th>Android Games</th>-->
-        <!--<th>DRM Free Games</th>-->
-        <!--<th>Music Tracks</th>-->
-    <!--</tr>-->
-    <!--</thead>-->
-    <!--<tbody>-->
     <tr ng-repeat="bundle in $data">
         <td data-title="'Title'" sortable="'title'" filter="{ 'title': 'text' }"><a ui-sref="bundleView({titleSlug: bundle.title_slug})">{{ bundle.title }}</a></td>
         <td data-title="'Site'" sortable="'site'" filter="{ 'site': 'text' }">{{ bundle.site }}</td>
@@ -25,6 +12,4 @@
         <td data-title="'DRM Free Game Count'" sortable="'drmfreegames_count'" filter="{ 'drmfreegames_count': 'text' }">{{ bundle.drmfreegames_count }}</td>
         <td data-title="'Audio Count'" sortable="'musictracks_count'" filter="{ 'musictracks_count': 'text' }">{{ bundle.musictracks_count }}</td>
     </tr>
-    <!--</tbody>-->
 </table>
-
