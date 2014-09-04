@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app="RFSGameDB">
+<head>
+  <meta charset="utf-8">
+  <title>RFS Game DB</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <%= javascript_include_tag "https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js",
+                               "https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js" %>
+  <![endif]-->
+
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+  <%= csrf_meta_tags %>
+</head>
+<body ng-controller="MainCtrl">
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a ui-sref="home" class="navbar-brand">RFS Game DB</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li ng-class="{active: highlight == 'bundles'}"><a ui-sref="bundles">Bundles</a></li>
+          <li ng-class="{active: highlight == 'games'}"><a ui-sref="games">Games</a></li>
+          <li ng-class="{active: highlight == 'Drmfrees'}"><a ui-sref="Drmfrees">DRM Free</a></li>
+          <li ng-class="{active: highlight == 'musictracks'}"><a ui-sref="musictracks">Music</a></li>
+          <li ng-class="{active: highlight == 'androidgames'}"><a ui-sref="androidgames">Android</a></li>
+          <li ng-class="{active: highlight == 'importer'}"><a ui-sref="importer">Import Data</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, :class => "alert alert-#{ name == :error ? "danger" : "success" } alert-dismissable" do %>
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <%= msg %>
+      <% end %>
+    <% end %>
+
+    <%= yield %>
+
+  </div>
+</body>
+</html>

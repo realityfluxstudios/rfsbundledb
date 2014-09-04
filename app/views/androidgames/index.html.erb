@@ -1,0 +1,27 @@
+<div class="page-header">
+  <%= link_to new_androidgame_path, :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Androidgame
+  <% end %>
+  <h1>Listing Android games</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @adroidgames) do |androidgame| %>
+            <td><%= link_to 'Show', androidgame %></td>
+        <td><%= link_to 'Edit', edit_androidgame_path(androidgame) %></td>
+        <td><%= link_to 'Destroy', androidgame, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,20 @@
+<%= form_for(@Androidgame, :html => { :class => "form-horizontal" }) do |f| %>
+  <% if @Androidgame.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <h4><%= pluralize(@Androidgame.errors.count, "error") %> prohibited this Androidgame from being saved:</h4>
+
+      <ul>
+      <% @Androidgame.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.submit :class => "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

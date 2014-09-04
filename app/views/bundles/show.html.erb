@@ -1,0 +1,21 @@
+<!--suppress HtmlUnknownAttribute -->
+<div ng-controller="BundlesController">
+  <!--suppress HtmlUnknownTarget -->
+  <a href="<%= url_for(:action => 'index') %>/{{bundle.name_slug}}">{{ bundle.name }}</a>
+
+  <pre>
+    {{ bundle  }}
+  </pre>
+  <div class="page-header">
+    <a class="btn btn-default" href="<%= url_for(:action => 'index') %>">Back <span class="glyphicon glyphicon-list-alt"></span></a>
+    <a class="btn btn-primary" href="<%= url_for(:action => 'edit') %>/{{bundle.name_slug}}/edit">Edit <span class="glyphicon glyphicon-list-pencil"></span></a>
+    <h1>{{ bundle.name }}</h1>
+  </div>
+
+  <dl class="dl-horizontal">
+    <dt>Games</dt>
+    <%= content_tag_for(:dd, @games) do |game| %>
+      <% link_to game.title, game_path(game.title_slug) %>
+    <% end %>
+  </dl>
+</div>

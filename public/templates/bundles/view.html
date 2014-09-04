@@ -1,0 +1,33 @@
+<div>
+    <div class="alert alert-warning text-center" data-ng-hide="bundle">
+        <h2>Loading Bundle Data...</h2>
+    </div>
+    <div class="page-header">
+        <h1>{{ bundle.title }}</h1>
+    </div>
+
+    <dl ng-show="bundle.games" class="dl-horizontal">
+        <dt>Games</dt>
+        <dd ng-repeat="item in bundle.games">
+            <a ui-sref="gameView({titleSlug: item.titleSlug})">{{item.title}}</a>
+        </dd>
+    </dl>
+    <dl ng-show="bundle.androidgames" class="dl-horizontal">
+        <dt>Android Games</dt>
+        <dd ng-repeat="item in bundle.androidgames">
+            <a ui-sref="androidGameView({titleSlug: item.titleSlug})">{{item.title}}</a>
+        </dd>
+    </dl>
+    <dl ng-show="bundle.musictracks" class="dl-horizontal">
+        <dt>Audio Files</dt>
+        <dd ng-repeat="item in bundle.musictracks">
+            <a ui-sref="musicTrackView({titleSlug: item.titleSlug})">{{item.title}}</a>
+        </dd>
+    </dl>
+    <dl ng-show="bundle.drmfreegames" class="dl-horizontal">
+        <dt>DRM Free Games</dt>
+        <dd ng-repeat="item in bundle.drmfreegames">
+            <a ui-sref="drmFreeGameView({titleSlug: item.titleSlug})">{{item.title}}</a>
+        </dd>
+    </dl>
+</div>

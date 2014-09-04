@@ -1,0 +1,38 @@
+<div class="page-header">
+    <h1>{{ filtered.length }} Android Games</h1>
+</div>
+<table class="table table-striped table-condensed table-hover">
+    <thead>
+    <tr>
+        <th>
+            <a class="glyphicon glyphicon-sort-by-alphabet" href="" ng-click="sortField = 'title'"></a>
+            <a class="glyphicon glyphicon-sort-by-alphabet-alt" href="" ng-click="sortField = '-title'"></a>
+            Title
+            <input style="font-weight: normal" ng-model="query.title" type="text"/>
+        </th>
+        <th>
+            <a class="glyphicon glyphicon-sort-by-alphabet" href="" ng-click="sortField = 'format'"></a>
+            <a class="glyphicon glyphicon-sort-by-alphabet-alt" href="" ng-click="sortField = '-format'"></a>
+            Format
+            <input style="font-weight: normal" ng-model="query.format" type="text"/>
+        </th>
+        <th>
+            <a class="glyphicon glyphicon-sort-by-alphabet" href="" ng-click="sortField = 'bundle'"></a>
+            <a class="glyphicon glyphicon-sort-by-alphabet-alt" href="" ng-click="sortField = '-bundle'"></a>
+            Bundle
+            <input style="font-weight: normal" ng-model="query.bundle" type="text"/>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-ng-repeat="androidgame in filtered = (androidgames|filter:query|orderBy:sortField)">
+        <td><a ui-sref="androidGameView({title_slug: androidgame.title_slug})">{{ androidgame.title }}</a></td>
+        <td>{{ androidgame.platform }}</td>
+        <td><a href="{{androidgame.bundle_url}}">{{androidgame.bundle}}</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="alert alert-warning text-center" data-ng-show="filtered.length == 0">
+    <h2>Loading Android Game Data...</h2>
+</div>

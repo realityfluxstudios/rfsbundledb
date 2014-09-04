@@ -1,0 +1,20 @@
+<%= form_for(@Drmfree, :html => { :class => "form-horizontal" }) do |f| %>
+  <% if @Drmfree.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <h4><%= pluralize(@Drmfree.errors.count, "error") %> prohibited this Drmfree from being saved:</h4>
+
+      <ul>
+      <% @Drmfree.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.submit :class => "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>

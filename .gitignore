@@ -1,0 +1,11 @@
+# standard stuff
+/.bundle
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/log/*.log
+/tmp
+/bin
+# .idea is a folder that RubyMine creates. It does not need to be in the repo.
+/.idea
+# these are bower installs. run bower install to get these components.
+/vendor/assets/components

@@ -1,0 +1,42 @@
+<!--suppress HtmlUnknownAttribute -->
+<div ng-controller="BundlesController">
+  <div class="page-header">
+    <%= link_to new_bundle_path, :class => 'btn btn-primary' do %>
+      <span class="glyphicon glyphicon-plus"></span>
+      New Bundle
+    <% end %>
+    <h1>Bundles</h1>
+  </div>
+
+  <table class="table table-striped table-condensed table-hover">
+    <thead>
+    <tr>
+      <th>
+        <a class="glyphicon glyphicon-sort-by-alphabet" href="" ng-click="sortField = 'name'"></a>
+        <a class="glyphicon glyphicon-sort-by-alphabet-alt" href="" ng-click="sortField = '-name'"></a>
+        Name
+        <input style="font-weight: normal" ng-model="query.name" type="text"/>
+      </th>
+      <th>
+        <a class="glyphicon glyphicon-sort-by-alphabet" href="" ng-click="sortField = 'site'"></a>
+        <a class="glyphicon glyphicon-sort-by-alphabet-alt" href="" ng-click="sortField = '-site'"></a>
+        Site
+        <input style="font-weight: normal" ng-model="query.site" type="text" disabled />
+      </th>
+      <th>
+        Actions
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-ng-repeat="bundle in bundles|filter:query|orderBy:sortField">
+      <td><a ng-click="viewBundle(bundle.name_slug)">{{ bundle.name }}</a></td>
+      <td>{{ bundle.site }}</td>
+      <td>
+        <a class="btn btn-info" href="/bundle/{{bundle.name_slug}}">Show</a>
+        <a class="btn btn-warning" href="/bundle/{{bundle.name_slug}}/edit">Edit</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,27 @@
+<div class="page-header">
+  <%= link_to new_Drmfree_path, :class => 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Drmfree
+  <% end %>
+  <h1>Listing Drmfrees</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @Drmfrees) do |DrmFreeGames| %>
+            <td><%= link_to 'Show', DrmFreeGames %></td>
+        <td><%= link_to 'Edit', edit_Drmfree_path(DrmFreeGames) %></td>
+        <td><%= link_to 'Destroy', DrmFreeGames, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" class="no-js" ng-app="RFSGameDB">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+<meta charset="utf-8"/>
+<title>Reality Flux Studios, LLC .:|:. Bundle Game Database</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<meta name="MobileOptimized" content="320">
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
+<!-- END GLOBAL MANDATORY STYLES -->
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+
+  <%= javascript_include_tag 'application' %>
+
+  <%= csrf_meta_tags %>
+<link rel="shortcut icon" href="favicon.ico"/>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed page-sidebar-closed page-sidebar-fixed page-footer-fixed" ng-controller="MainCtrl">
+<!-- BEGIN HEADER -->
+<div class="header navbar  navbar-fixed-top">
+    <!-- BEGIN TOP NAVIGATION BAR -->
+    <div class="header-inner">
+        <!-- BEGIN LOGO -->
+    <div class="page-logo">
+        <a href="index.html">
+            <h3>RFS Game DB</h3>
+        </a>
+    </div>
+    <!-- END LOGO -->
+        <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+        <a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <img src="assets/menu-toggler.png" alt=""/>
+        </a>
+        <!-- END RESPONSIVE MENU TOGGLER -->
+    </div>
+    <!-- END TOP NAVIGATION BAR -->
+</div>
+<!-- END HEADER -->
+<div class="clearfix">
+</div>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <!-- BEGIN SIDEBAR -->
+    <div class="page-sidebar-wrapper">
+        <div class="page-sidebar navbar-collapse collapse">
+            <!-- BEGIN SIDEBAR MENU -->
+            <ul class="page-sidebar-menu">
+                <li class="sidebar-toggler-wrapper">
+                    <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                    <div class="sidebar-toggler">
+                    </div>
+                    <div class="clearfix">
+                    </div>
+                    <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                </li>
+                <li class="start "ng-class="{active: highlight == 'home'}">
+                    <a ui-sref="home">
+                      <i class="icon-home"></i>
+                      <span class="title">Dashboard</span>
+                    </a>
+                </li>
+                <li ng-class="{active: highlight == 'bundles'}" >
+                    <a ui-sref="bundles">
+                      <i class="icon-bar-chart"></i>
+                      <span class="title">Bundles</span>
+                    </a>
+                </li>
+                <li ng-class="{active: highlight == 'games'}" >
+                    <a ui-sref="games">
+                      <i class="icon-bar-chart"></i>
+                      <span class="title">Games</span>
+                    </a>
+                </li>
+                <li ng-class="{active: highlight == 'drmfreegames'}" >
+                    <a ui-sref="drmfreegames">
+                      <i class="icon-bar-chart"></i>
+                      <span class="title">DRM Free Games</span>
+                    </a>
+                </li>
+                <li ng-class="{active: highlight == 'musictracks'}" >
+                    <a ui-sref="musictracks">
+                      <i class="icon-bar-chart"></i>
+                      <span class="title">Music</span>
+                    </a>
+                </li>
+                <li ng-class="{active: highlight == 'androidgames'}" >
+                    <a ui-sref="androidgames">
+                      <i class="icon-bar-chart"></i>
+                      <span class="title">Android</span>
+                    </a>
+                </li>
+            </ul>
+            <!-- END SIDEBAR MENU -->
+        </div>
+    </div>
+    <!-- END SIDEBAR -->
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <div class="page-content">
+            <!-- BEGIN PAGE HEADER-->
+            <h3 class="page-title">
+              <ui-breadcrumbs displayname-property="data.displayName" template-url="/templates/directives/uiBreadcrumbs.tpl.html"></ui-breadcrumbs>
+            </h3>
+            <!-- END PAGE HEADER-->
+            <!-- BEGIN PAGE CONTENT-->
+            <div class="row">
+                <div class="col-md-12">
+
+                  <% flash.each do |name, msg| %>
+                      <%= content_tag :div, :class => "alert alert-#{ name == :error ? "danger" : "success" } alert-dismissable" do %>
+                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                          <%= msg %>
+                      <% end %>
+                  <% end %>
+
+                  <%= yield %>
+
+                </div>
+            </div>
+            <!-- END PAGE CONTENT-->
+        </div>
+    </div>
+    <!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+<div class="footer">
+    <div class="footer-inner">
+         2014 &copy; Reality Flux Studios, LLC
+    </div>
+    <div class="footer-tools">
+        <span class="go-top">
+        <i class="fa fa-angle-up"></i>
+        </span>
+    </div>
+</div>
+<!-- END FOOTER -->
+<script>
+jQuery(document).ready(function() {    
+   App.init();
+});
+</script>
+<!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>
