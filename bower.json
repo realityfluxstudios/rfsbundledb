@@ -3,11 +3,7 @@
 
     "dependencies": {
         "angular-xeditable": "*",
-        "ngReactGrid": "*",
         "jsoneditor": "*",
-        "angular-utils-ui-breadcrumbs": "*",
-        "angular-utils-pagination": "*",
-        "react": "*",
         "ng-table": "*",
         "bootstrap": "*"
     }

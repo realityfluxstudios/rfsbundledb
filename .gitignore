@@ -1,5 +1,7 @@
 # standard stuff
 /.bundle
+# I added the development.sqlite3 file to the repo on purpose. I sanitized all the keys and URLs so it is not a security risk
+# for my keys and gift urls. I did this so there is sample data. feel free to rake db:drop and rake db:migrate to start fresh
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /log/*.log
@@ -9,3 +11,12 @@
 /.idea
 # these are bower installs. run bower install to get these components.
 /vendor/assets/components
+
+# I am ignoring all the component folders in the vendor/assets/javascripts folder because Rubymine doesn't see
+# /vendor/assets/compnents as a search path for files from the application.js.
+/vendor/assets/javascripts/angular
+/vendor/assets/javascripts/angular-xeditable
+/vendor/assets/javascripts/bootstrap
+/vendor/assets/javascripts/jquery
+/vendor/assets/javascripts/jsoneditor
+/vendor/assets/javascripts/ng-table
