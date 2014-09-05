@@ -1,5 +1,19 @@
 <h1>Bundles</h1>
 
+<div>
+Stats
+    <dl class="dl-horizontal">
+        <dt>Games</dt>
+        <dd>{{ gamesCount() }}</dd>
+        <dt>Android Games</dt>
+        <dd>{{ androidGamesCount() }}</dd>
+        <dt>DRM Free Games</dt>
+        <dd>{{ drmFreeGamesCount() }}</dd>
+        <dt>Audio File</dt>
+        <dd>{{ musicTracksCount() }}</dd>
+    </dl>
+</div>
+
 <button ng-click="tableParams.sorting({})" class="btn btn-default pull-right">Clear sorting</button>
 <button ng-click="tableParams.filter({})" class="btn btn-default pull-right">Clear filter</button>
 
@@ -12,6 +26,7 @@
         <td data-title="'DRM Free Game Count'" sortable="'drmfreegames_count'" filter="{ 'drmfreegames_count': 'text' }">{{ bundle.drmfreegames_count }}</td>
         <td data-title="'Audio Count'" sortable="'musictracks_count'" filter="{ 'musictracks_count': 'text' }">{{ bundle.musictracks_count }}</td>
     </tr>
+
 </table>
 
 <div class="alert alert-warning text-center" data-ng-show="bundles.length == 0">

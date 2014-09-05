@@ -23,15 +23,14 @@ RFSBundleDB.controller('BundlesIndexCtrl', function($rootScope, $scope, $filter,
             getData: function($defer, params) {
                 // use build-in angular filter
                 var filteredData = params.filter() ?
-                    $filter('filter')(data, params.filter()) :
-                    data;
+                    $filter('filter')(data, params.filter()) : data;
                 var orderedData = params.sorting() ?
-                    $filter('orderBy')(filteredData, params.orderBy()) :
-                    data;
+                    $filter('orderBy')(filteredData, params.orderBy()) : data;
+
+                $scope.bundles = filteredData;
 
                 params.total(orderedData.length); // set total for recalc pagination
                 $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-
             },
             counts: [5,10,25,50,100]
         });
@@ -43,5 +42,49 @@ RFSBundleDB.controller('BundlesIndexCtrl', function($rootScope, $scope, $filter,
         $timeout(function(){
             $scope.tableParams.reload();
         }, 500);
+
+    $scope.gamesCount = function(){
+            var count = 0;
+            for(var i=0; i < $scope.bundles.length; i++) {
+                var bundle = $scope.bundles[i];
+                if (bundle.hasOwnProperty('games_count')) {
+                    count += bundle.games_count;
+                }
+            }
+            return count;
+        };
+
+        $scope.androidGamesCount = function(){
+            var count = 0;
+            for(var i=0; i < $scope.bundles.length; i++) {
+                var bundle = $scope.bundles[i];
+                if (bundle.hasOwnProperty('androidgames_count')) {
+                    count += bundle.androidgames_count;
+                }
+            }
+            return count;
+        };
+
+        $scope.drmFreeGamesCount = function(){
+            var count = 0;
+            for(var i=0; i < $scope.bundles.length; i++) {
+                var bundle = $scope.bundles[i];
+                if (bundle.hasOwnProperty('drmfreegames_count')) {
+                    count += bundle.drmfreegames_count;
+                }
+            }
+            return count;
+        };
+
+        $scope.musicTracksCount = function(){
+            var count = 0;
+            for(var i=0; i < $scope.bundles.length; i++) {
+                var bundle = $scope.bundles[i];
+                if (bundle.hasOwnProperty('musictracks_count')) {
+                    count += bundle.musictracks_count;
+                }
+            }
+            return count;
+        }
     }
 );

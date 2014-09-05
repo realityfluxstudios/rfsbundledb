@@ -3,7 +3,6 @@
  *= require bootstrap-generators
  *= require bootstrap-variables
  *= require jsoneditor/jsoneditor.css
- *= require ngReactGrid/build/css/ngReactGrid.css
  *= require bootstrap/dist/css/bootstrap.css
  *= require angular-xeditable/dist/css/xeditable.css
  *= require ng-table/ng-table.css

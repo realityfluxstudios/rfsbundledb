@@ -6,8 +6,6 @@
 //= require jquery_ujs
 //= require bootstrap/dist/js/bootstrap.js
 //= require jsoneditor/jsoneditor.js
-//= require react/react.js
-//= require ngReactGrid/build/js/ngReactGrid.js
 //= require ngStorage.js
 //= require angular-xeditable/dist/js/xeditable.js
 //= require ng-table/ng-table.js
