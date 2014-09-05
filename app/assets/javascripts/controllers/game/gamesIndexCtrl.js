@@ -1,7 +1,7 @@
 'use strict';
 
 RFSBundleDB.controller('GamesIndexCtrl', function ($rootScope, $scope, $filter,
-                                                   $resource, $timeout, loadGames, ngTableParams) {
+                                                   $timeout, loadGames, ngTableParams) {
 
     var data = loadGames;
 
@@ -31,14 +31,18 @@ RFSBundleDB.controller('GamesIndexCtrl', function ($rootScope, $scope, $filter,
         counts: [5,10,25,50,100]
     });
 
-    $scope.$watch('[tableParams.$params, tableParams.data]', function () {
+    // hacky but this is needed to reload the table after the json is retrieved.
+    // because it is a local site there should be very minimal latency with the retrieval so 500 should work
+    // might have to increase it to 1000 or 1500 once more data is in the db.
+    // TODO: check on delay of $timeout
+    $timeout(function(){
         $scope.tableParams.reload();
-    });
+    }, 500);
 
     $scope.keyCount = function () {
         var count = 0;
-        for (var i = 0; i < $scope.filteredGames.length; i++) {
-            var game = $scope.filteredGames[i];
+        for (var i = 0; i < data.length; i++) {
+            var game = data[i];
             if (game.hasOwnProperty('gamekeys_count')) {
                 count += game.gamekeys_count;
             }

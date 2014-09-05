@@ -2,12 +2,15 @@
 
 // Bundles controller
 RFSBundleDB.controller('BundlesIndexCtrl', function($rootScope, $scope, $filter,
-                                                    $resource, $timeout, loadBundles, ngTableParams) {
-        $rootScope.highlight = 'bundles';
-
+                                                    $timeout, loadBundles, ngTableParams) {
         console.log("BUNDLES Index CONTROLLER");
 
+        $rootScope.highlight = 'bundles';
+
         var data = loadBundles;
+
+        // so I can get extra info from the data and it be exposed on the view
+        $scope.bundles = data;
 
         $scope.tableParams = new ngTableParams({
             page: 1,            // show first page
@@ -33,52 +36,12 @@ RFSBundleDB.controller('BundlesIndexCtrl', function($rootScope, $scope, $filter,
             counts: [5,10,25,50,100]
         });
 
-        $scope.$watch('[tableParams.$params, tableParams.data]', function () {
+        // hacky but this is needed to reload the table after the json is retrieved.
+        // because it is a local site there should be very minimal latency with the retrieval so 500 should work
+        // might have to increase it to 1000 or 1500 once more data is in the db.
+        // TODO: check on delay of $timeout
+        $timeout(function(){
             $scope.tableParams.reload();
-        });
-
-//        $scope.gamesCount = function(){
-//            var count = 0;
-//            for(var i=0; i < $scope.filtered.length; i++) {
-//                var bundle = $scope.filtered[i];
-//                if (bundle.hasOwnProperty('games_count')) {
-//                    count += bundle.games_count;
-//                }
-//            }
-//            return count;
-//        };
-//
-//        $scope.androidGamesCount = function(){
-//            var count = 0;
-//            for(var i=0; i < $scope.filtered.length; i++) {
-//                var bundle = $scope.filtered[i];
-//                if (bundle.hasOwnProperty('androidgames_count')) {
-//                    count += bundle.androidgames_count;
-//                }
-//            }
-//            return count;
-//        };
-//
-//        $scope.drmFreeGamesCount = function(){
-//            var count = 0;
-//            for(var i=0; i < $scope.filtered.length; i++) {
-//                var bundle = $scope.filtered[i];
-//                if (bundle.hasOwnProperty('drmfreegames_count')) {
-//                    count += bundle.drmfreegames_count;
-//                }
-//            }
-//            return count;
-//        };
-//
-//        $scope.musicTracksCount = function(){
-//            var count = 0;
-//            for(var i=0; i < $scope.filtered.length; i++) {
-//                var bundle = $scope.filtered[i];
-//                if (bundle.hasOwnProperty('musictracks_count')) {
-//                    count += bundle.musictracks_count;
-//                }
-//            }
-//            return count;
-//        }
+        }, 500);
     }
 );

@@ -12,3 +12,7 @@
         <td data-title="'Store URL'"><a href="{{ game.store_url }}" target="_blank">Store</a></td>
     </tr>
 </table>
+
+<div class="alert alert-warning text-center" data-ng-show="games.length == 0">
+    <h2>Loading Game Data...</h2>
+</div>

@@ -13,3 +13,7 @@
         <td data-title="'Audio Count'" sortable="'musictracks_count'" filter="{ 'musictracks_count': 'text' }">{{ bundle.musictracks_count }}</td>
     </tr>
 </table>
+
+<div class="alert alert-warning text-center" data-ng-show="bundles.length == 0">
+    <h2>Loading Bundle Data...</h2>
+</div>
