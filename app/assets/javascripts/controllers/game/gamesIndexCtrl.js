@@ -5,6 +5,8 @@ RFSBundleDB.controller('GamesIndexCtrl', function ($rootScope, $scope, $filter,
 
     var data = loadGames;
 
+    $scope.games = data;
+
     $rootScope.highlight = 'games';
 
     $scope.tableParams = new ngTableParams({
@@ -24,6 +26,8 @@ RFSBundleDB.controller('GamesIndexCtrl', function ($rootScope, $scope, $filter,
                 $filter('orderBy')(filteredData, params.orderBy()) :
                 data;
 
+            $scope.games = filteredData;
+
             params.total(orderedData.length); // set total for recalc pagination
             $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
 
@@ -41,14 +45,12 @@ RFSBundleDB.controller('GamesIndexCtrl', function ($rootScope, $scope, $filter,
 
     $scope.keyCount = function () {
         var count = 0;
-        for (var i = 0; i < data.length; i++) {
-            var game = data[i];
+        for (var i = 0; i < $scope.games.length; i++) {
+            var game = $scope.games[i];
             if (game.hasOwnProperty('gamekeys_count')) {
                 count += game.gamekeys_count;
             }
         }
         return count;
     };
-
-
 });

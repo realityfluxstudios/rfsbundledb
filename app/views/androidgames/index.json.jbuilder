@@ -1,4 +1,4 @@
 json.array!(@androidgames) do |androidgame|
-  json.extract! androidgame, :id
-  json.url androidgame_url(androidgame, format: :json)
+  json.extract! androidgame, :title_slug, :dev, :format
+  json.title androidgame.title.truncate(40)
 end
