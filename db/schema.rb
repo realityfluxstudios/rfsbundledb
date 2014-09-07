@@ -11,13 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140823122535) do
+ActiveRecord::Schema.define(version: 20140907122722) do
 
   create_table "androidgames", force: true do |t|
-    t.integer  "bundle_id"
     t.string   "title"
-    t.string   "dllink"
     t.string   "title_slug"
+    t.string   "dev"
+    t.string   "dev_slug"
+    t.string   "dev_url"
+    t.string   "icon"
+    t.string   "format"
+    t.string   "size"
+    t.string   "http"
+    t.string   "bt"
+    t.string   "md5_hash"
+    t.integer  "bundle_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -25,25 +33,31 @@ ActiveRecord::Schema.define(version: 20140823122535) do
   add_index "androidgames", ["bundle_id"], name: "index_androidgames_on_bundle_id"
 
   create_table "bundles", force: true do |t|
-    t.string   "name"
-    t.string   "site"
-    t.string   "gift_url"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "name_slug"
-  end
-
-  create_table "drmfreegames", force: true do |t|
-    t.integer  "bundle_id"
     t.string   "title"
     t.string   "title_slug"
-    t.string   "dllink"
-    t.string   "platform"
+    t.string   "site"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "drmfreegames", ["bundle_id"], name: "index_drmfreegames_on_bundle_id"
+  create_table "drm_free_games", force: true do |t|
+    t.string   "title"
+    t.string   "title_slug"
+    t.string   "dev"
+    t.string   "dev_slug"
+    t.string   "dev_url"
+    t.string   "format"
+    t.string   "size"
+    t.string   "icon"
+    t.string   "http"
+    t.string   "platform"
+    t.string   "md5_hash"
+    t.integer  "bundle_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "drm_free_games", ["bundle_id"], name: "index_drm_free_games_on_bundle_id"
 
   create_table "ebooks", force: true do |t|
     t.string   "title"
@@ -63,8 +77,9 @@ ActiveRecord::Schema.define(version: 20140823122535) do
   add_index "ebooks", ["bundle_id"], name: "index_ebooks_on_bundle_id"
 
   create_table "gamekeys", force: true do |t|
-    t.integer  "game_id"
     t.string   "key"
+    t.string   "gift_url"
+    t.integer  "game_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -72,13 +87,16 @@ ActiveRecord::Schema.define(version: 20140823122535) do
   add_index "gamekeys", ["game_id"], name: "index_gamekeys_on_game_id"
 
   create_table "games", force: true do |t|
-    t.integer  "bundle_id"
     t.string   "title"
-    t.string   "drm"
     t.string   "title_slug"
+    t.string   "drm"
     t.string   "store_url"
     t.string   "image_url"
-    t.string   "value"
+    t.string   "price"
+    t.string   "cheap_shark_id"
+    t.string   "cheap_shark_url"
+    t.string   "steam_id"
+    t.integer  "bundle_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -93,15 +111,41 @@ ActiveRecord::Schema.define(version: 20140823122535) do
     t.datetime "updated_at"
   end
 
-  create_table "musictracks", force: true do |t|
-    t.integer  "bundle_id"
-    t.string   "title"
-    t.string   "artist"
-    t.string   "mp3dllink"
-    t.string   "flacdllink"
+  add_index "giftedgamekeys", ["game_id"], name: "index_giftedgamekeys_on_game_id"
+
+  create_table "kinds", force: true do |t|
+    t.string   "platform"
+    t.string   "dev_url"
+    t.string   "format"
+    t.string   "size"
+    t.string   "http"
+    t.string   "bt"
+    t.string   "md5_hash"
+    t.integer  "drmfree_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  add_index "kinds", ["drmfree_id"], name: "index_kinds_on_drmfree_id"
+
+  create_table "musictracks", force: true do |t|
+    t.string   "title"
     t.string   "title_slug"
+    t.string   "dev"
+    t.string   "dev_slug"
+    t.string   "dev_url"
+    t.string   "mp3dllink"
+    t.string   "mp3type"
+    t.string   "flacdllink"
+    t.string   "flactype"
+    t.string   "format"
+    t.string   "size"
+    t.string   "http"
+    t.string   "bt"
+    t.string   "md5_hash"
+    t.integer  "bundle_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "musictracks", ["bundle_id"], name: "index_musictracks_on_bundle_id"

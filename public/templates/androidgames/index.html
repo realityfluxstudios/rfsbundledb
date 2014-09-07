@@ -1,38 +1,23 @@
-<div class="page-header">
-    <h1>{{ filtered.length }} Android Games</h1>
+<h1>Android Games</h1>
+
+<div class="pull-left">
+    <button ng-click="tableParams.sorting({'title':'asc'});tableParams.filter({});" class="btn btn-default">Restore Defaults</button><br/>
 </div>
-<table class="table table-striped table-condensed table-hover">
-    <thead>
-    <tr>
-        <th>
-            <a class="glyphicon glyphicon-sort-by-alphabet" href="" ng-click="sortField = 'title'"></a>
-            <a class="glyphicon glyphicon-sort-by-alphabet-alt" href="" ng-click="sortField = '-title'"></a>
-            Title
-            <input style="font-weight: normal" ng-model="query.title" type="text"/>
-        </th>
-        <th>
-            <a class="glyphicon glyphicon-sort-by-alphabet" href="" ng-click="sortField = 'format'"></a>
-            <a class="glyphicon glyphicon-sort-by-alphabet-alt" href="" ng-click="sortField = '-format'"></a>
-            Format
-            <input style="font-weight: normal" ng-model="query.format" type="text"/>
-        </th>
-        <th>
-            <a class="glyphicon glyphicon-sort-by-alphabet" href="" ng-click="sortField = 'bundle'"></a>
-            <a class="glyphicon glyphicon-sort-by-alphabet-alt" href="" ng-click="sortField = '-bundle'"></a>
-            Bundle
-            <input style="font-weight: normal" ng-model="query.bundle" type="text"/>
-        </th>
+<div class="pull-right">
+    <ul class="nav nav-pills">
+        <li class="active">
+            <a><span class="badge pull-right">{{ androidgames.length }}</span>Android Games</a>
+        </li>
+    </ul>
+</div>
+<table ng-table="tableParams" show-filter="true" class="table table-responsive table-striped table-condensed table-hover">
+    <tr ng-repeat="androidgame in $data">
+        <td data-title="'Title'" sortable="'title'" filter="{ 'title': 'text' }"><a ui-sref="androidGameView({title_slug: androidgame.title_slug})">{{ androidgame.title }} <span ng-show="androidgame.format && androidgame.format != 'Download'">({{ androidgame.format }})</span></a></td>
+        <td data-title="'Developer'" sortable="'dev'" filter="{ 'dev': 'text' }"><a href="{{androidgame.dev_url}}">{{ androidgame.dev }}</a></td>
+        <td data-title="'Bundle'" sortable="'bundle'" filter="{ 'bundle': 'text' }"><a href="{{androidgame.bundle_url}}">{{androidgame.bundle}}</a></td>
     </tr>
-    </thead>
-    <tbody>
-    <tr data-ng-repeat="androidgame in filtered = (androidgames|filter:query|orderBy:sortField)">
-        <td><a ui-sref="androidGameView({title_slug: androidgame.title_slug})">{{ androidgame.title }}</a></td>
-        <td>{{ androidgame.platform }}</td>
-        <td><a href="{{androidgame.bundle_url}}">{{androidgame.bundle}}</a></td>
-    </tr>
-    </tbody>
 </table>
 
-<div class="alert alert-warning text-center" data-ng-show="filtered.length == 0">
+<div class="alert alert-warning text-center" data-ng-show="androidgames.length == 0">
     <h2>Loading Android Game Data...</h2>
 </div>

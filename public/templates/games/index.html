@@ -18,9 +18,9 @@
     <tr ng-repeat="game in $data">
         <td data-title="'Title'" sortable="'title'" filter="{ 'title': 'text' }"><a ui-sref="gameView({titleSlug: game.title_slug})" data-toggle="tooltip" data-placement="left" title="{{ game.title }}">{{ game.title }}</a></td>
         <td data-title="'Bundle'" sortable="'bundle'" filter="{ 'bundle': 'text' }">{{ game.bundle }}</td>
-        <td data-title="'DRM'" sortable="'drm'" filter="{ 'drm': 'text' }">{{ game.drm }}</td>
+        <td data-title="'DRM'" sortable="'drm'" filter="{ 'drm': 'text' }"><span ng-show="game.drm == null">Unknown</span>{{ game.drm }}</td>
         <td data-title="'Game Keys'" sortable="'gamekeys_count'" filter="{ 'gamekeys_count': 'text' }">{{ game.gamekeys_count }}</td>
-        <td data-title="'Store URL'"><a href="{{ game.store_url }}" target="_blank">Store</a></td>
+        <td data-title="'Store URL'"><span ng-show="game.store_url != null"><a href="{{ game.store_url }}" target="_blank">Store</a></span></td>
     </tr>
 </table>
 

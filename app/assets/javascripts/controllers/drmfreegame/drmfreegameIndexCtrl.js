@@ -12,14 +12,16 @@ RFSBundleDB.controller('DrmfreegameIndexCtrl',  function($rootScope, $scope, $fi
 
         $scope.drmfreegames = data;
 
+        $scope.groupby = 'title';
+
         $scope.tableParams = new ngTableParams({
             page: 1,            // show first page
-            count: 10           // count per page
-        }, {
-            groupBy: 'title',
+            count: 10,           // count per page
             sorting: {
                 title: 'asc'     // initial sorting
-            },
+            }
+        }, {
+
             total: data.length, // length of data
             getData: function($defer, params) {
                 // use build-in angular filter
@@ -39,40 +41,6 @@ RFSBundleDB.controller('DrmfreegameIndexCtrl',  function($rootScope, $scope, $fi
             counts: [5,10,25,50,100]
         });
 
-
-        var inArray = Array.prototype.indexOf ?
-            function (val, arr) {
-                return arr.indexOf(val)
-            } :
-            function (val, arr) {
-                var i = arr.length;
-                while (i--) {
-                    if (arr[i] === val) return i;
-                }
-                return -1;
-            };
-
-        $scope.platform = function(column) {
-            var def = $q.defer(),
-                arr = [],
-                names = [];
-
-            $timeout(function(){
-                angular.forEach(data, function(item){
-                    if (inArray(item.name, arr) === -1) {
-                        arr.push(item.name);
-                        names.push({
-                            'id': item.name,
-                            'title': item.name
-                        });
-                    }
-                });
-            }, 1000);
-            def.resolve(names);
-            console.log(def.resolve(names));
-            return def;
-        };
-
         // hacky but this is needed to reload the table after the json is retrieved.
         // because it is a local site there should be very minimal latency with the retrieval so 500 should work
         // might have to increase it to 1000 or 1500 once more data is in the db.
@@ -80,6 +48,24 @@ RFSBundleDB.controller('DrmfreegameIndexCtrl',  function($rootScope, $scope, $fi
         $timeout(function(){
             $scope.tableParams.reload();
         }, 500);
+
+        $scope.uniqueDRMFree = function(){
+            var i,
+                title,
+                count=0,
+                uniqueResults= {};
+
+            for (i in $scope.drmfreegames) {
+                title= $scope.drmfreegames[i].title;
+                if (!uniqueResults[title]) {
+                    uniqueResults[title]= [];
+                    count++;
+                }
+
+                uniqueResults[title].push($scope.drmfreegames[i]);
+            }
+            return count;
+        };
 
         $scope.platformCounts = {
             windows: function(){
@@ -114,5 +100,13 @@ RFSBundleDB.controller('DrmfreegameIndexCtrl',  function($rootScope, $scope, $fi
                 return count;
             }
         };
+
+        $scope.$watch('groupby', function(value){
+            $scope.tableParams.settings().groupBy = value;
+            console.log('Scope Value', $scope.groupby);
+            console.log('Watch value', this.last);
+            console.log('new table',$scope.tableParams);
+            $scope.tableParams.reload();
+        });
     }
 );
