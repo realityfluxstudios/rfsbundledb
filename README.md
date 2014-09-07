@@ -15,4 +15,4 @@ Prerequisites
 * Ruby on Rails 4.1.4
 * Ruby 2.1.2p95
 * Bower
-* Ubuntu (Just a recommendation, it's what I use on my web servers and I'll be able to give better support on setting this up if you are using the same OS
+* Ubuntu (Just a recommendation, it's what I use on my web servers and I'll be able to give better support on setting this up if you are using the same OS)

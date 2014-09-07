@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140907122722) do
+ActiveRecord::Schema.define(version: 20140823122535) do
 
   create_table "androidgames", force: true do |t|
     t.string   "title"
@@ -112,21 +112,6 @@ ActiveRecord::Schema.define(version: 20140907122722) do
   end
 
   add_index "giftedgamekeys", ["game_id"], name: "index_giftedgamekeys_on_game_id"
-
-  create_table "kinds", force: true do |t|
-    t.string   "platform"
-    t.string   "dev_url"
-    t.string   "format"
-    t.string   "size"
-    t.string   "http"
-    t.string   "bt"
-    t.string   "md5_hash"
-    t.integer  "drmfree_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "kinds", ["drmfree_id"], name: "index_kinds_on_drmfree_id"
 
   create_table "musictracks", force: true do |t|
     t.string   "title"
