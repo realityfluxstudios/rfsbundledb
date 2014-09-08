@@ -1,4 +1,4 @@
 json.array!(@musictracks) do |musictrack|
-  json.extract! musictrack, :title, :dev
-  json.url musictrack_url(musictrack.title_slug)
+  json.title musictrack.title.truncate(40)
+  json.extract! musictrack, :title_slug, :dev, :format
 end

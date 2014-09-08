@@ -1,3 +1,3 @@
 RFSBundleDB.factory('loadMusicTracks', function($resource) {
-    return $resource("/musictracks.json").query();
+    return $resource("/api/musictracks.json").query();
 });

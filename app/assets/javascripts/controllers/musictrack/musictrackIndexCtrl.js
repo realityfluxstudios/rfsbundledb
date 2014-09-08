@@ -1,7 +1,8 @@
 'use strict';
 
 // Bundles controller
-RFSBundleDB.controller('MusictrackIndexCtrl',  function($rootScope, $location, $scope, loadMusicTracks) {
+RFSBundleDB.controller('MusicTracksIndexCtrl',  function($rootScope, $scope, $filter, $timeout, $q,
+                                                        loadMusicTracks, ngTableParams) {
 
         $rootScope.highlight = 'musictrack';
 
@@ -9,15 +10,15 @@ RFSBundleDB.controller('MusictrackIndexCtrl',  function($rootScope, $location, $
 
         var data = loadMusicTracks;
 
-        $scope.bundles = data;
+        $scope.musictracks = data;
 
         $scope.tableParams = new ngTableParams({
             page: 1,            // show first page
-            count: 10           // count per page
-        }, {
+            count: 10,           // count per page
             sorting: {
                 title: 'asc'     // initial sorting
-            },
+            }
+        }, {
             total: data.length, // length of data
             getData: function($defer, params) {
                 // use build-in angular filter
@@ -27,6 +28,8 @@ RFSBundleDB.controller('MusictrackIndexCtrl',  function($rootScope, $location, $
                 var orderedData = params.sorting() ?
                     $filter('orderBy')(filteredData, params.orderBy()) :
                     data;
+
+                $scope.musictracks = orderedData;
 
                 params.total(orderedData.length); // set total for recalc pagination
                 $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
@@ -42,7 +45,22 @@ RFSBundleDB.controller('MusictrackIndexCtrl',  function($rootScope, $location, $
             $scope.tableParams.reload();
         }, 500);
 
+        $scope.uniqueAudioTracks = function(){
+            var i,
+                title,
+                count=0,
+                uniqueResults= {};
 
+            for (i in $scope.musictracks) {
+                title= $scope.musictracks[i].title;
+                if (!uniqueResults[title]) {
+                    uniqueResults[title]= [];
+                    count++;
+                }
 
+                uniqueResults[title].push($scope.musictracks[i]);
+            }
+            return count;
+        };
     }
 );

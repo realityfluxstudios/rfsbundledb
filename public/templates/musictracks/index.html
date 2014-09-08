@@ -1,36 +1,22 @@
 <div class="page-header">
     Audio Files
 </div>
-<table class="table table-striped table-condensed table-hover">
-    <thead>
-    <tr>
-        <th>
-            <a class="glyphicon glyphicon-sort-by-alphabet" href="" ng-click="sortField = 'title'"></a>
-            <a class="glyphicon glyphicon-sort-by-alphabet-alt" href="" ng-click="sortField = '-title'"></a>
-            Title
-            <input style="font-weight: normal" ng-model="query.title" type="text"/>
-        </th>
-        <th>
-            <a class="glyphicon glyphicon-sort-by-alphabet" href="" ng-click="sortField = 'format'"></a>
-            <a class="glyphicon glyphicon-sort-by-alphabet-alt" href="" ng-click="sortField = '-format'"></a>
-            Format
-            <input style="font-weight: normal" ng-model="query.format" type="text"/>
-        </th>
-        <th>
-            <a class="glyphicon glyphicon-sort-by-alphabet" href="" ng-click="sortField = 'bundle'"></a>
-            <a class="glyphicon glyphicon-sort-by-alphabet-alt" href="" ng-click="sortField = '-bundle'"></a>
-            Bundle
-            <input style="font-weight: normal" ng-model="query.bundle" type="text"/>
-        </th>
+<div class="pull-left">
+    <button ng-click="tableParams.sorting({'title':'asc'});tableParams.filter({});" class="btn btn-default">Restore Defaults</button><br/>
+</div>
+<div class="pull-right">
+    <ul class="nav nav-pills">
+        <li class="active">
+            <a><span class="badge pull-right">{{ uniqueAudioTracks() }}</span>Audio Tracks</a>
+        </li>
+    </ul>
+</div>
+<table ng-table="tableParams" show-filter="true" class="table table-responsive table-striped table-condensed table-hover">
+    <tr ng-repeat="musictrack in $data">
+        <td data-title="'Title'" sortable="'title'" filter="{ 'title': 'text' }"><a ui-sref="musicTrackView({titleSlug: musictrack.title_slug})">{{ musictrack.title }}</a></td>
+        <td data-title="'Format'" sortable="'format'" filter="{ 'format': 'text' }">{{ musictrack.format }}</td>
+        <td data-title="'Artist'" sortable="'artist'" filter="{ 'artist': 'text' }">{{musictrack.dev}}</td>
     </tr>
-    </thead>
-    <tbody>
-    <tr data-ng-repeat="musictrack in filtered = (musictracks|filter:query|orderBy:sortField)">
-        <td><a ui-sref="musicTrackView({titleSlug: musictrack.title_slug})">{{ musictrack.title }}</a></td>
-        <td>{{ musictrack.platform }}</td>
-        <td><a href="{{musictrack.bundle_url}}">{{musictrack.bundle}}</a></td>
-    </tr>
-    </tbody>
 </table>
 
 <div class="alert alert-warning text-center" data-ng-show="filtered.length == 0">

@@ -11,11 +11,11 @@ RFSBundleDB.controller('GamesIndexCtrl', function ($rootScope, $scope, $filter,
 
     $scope.tableParams = new ngTableParams({
         page: 1,            // show first page
-        count: 10           // count per page
-    }, {
+        count: 10,           // count per page
         sorting: {
             title: 'asc'     // initial sorting
-        },
+        }
+    }, {
         total: data.length, // length of data
         getData: function($defer, params) {
             // use build-in angular filter
