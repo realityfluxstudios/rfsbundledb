@@ -1,28 +1,28 @@
 class DrmFreeGamesController < ApplicationController
   before_action :set_drmfreegame, only: [:show, :edit, :destroy]
 
-  # GET /Drmfreegames
-  # GET /Drmfreegames.json
+  # GET /drmfreegames
+  # GET /drmfreegames.json
   def index
     @drmfreegames = DrmFreeGame.all
   end
 
-  # GET /Drmfreegames/1
-  # GET /Drmfreegames/1.json
+  # GET /drmfreegames/1
+  # GET /drmfreegames/1.json
   def show
   end
 
-  # GET /Drmfreegames/new
+  # GET /drmfreegames/new
   def new
     @drmfreegames = DrmFreeGame.new
   end
 
-  # GET /Drmfreegames/1/edit
+  # GET /drmfreegames/1/edit
   def edit
   end
 
-  # POST /Drmfreegames
-  # POST /Drmfreegames.json
+  # POST /drmfreegames
+  # POST /drmfreegames.json
   def create
     @drmfreegames = DrmFreeGame.new(drmfreegame_params)
 
@@ -37,8 +37,8 @@ class DrmFreeGamesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /Drmfreegames/1
-  # PATCH/PUT /Drmfreegames/1.json
+  # PATCH/PUT /drmfreegames/1
+  # PATCH/PUT /drmfreegames/1.json
   # def update
   #   respond_to do |format|
   #     if @drmfreegames.update(Drmfree_params)
@@ -51,8 +51,8 @@ class DrmFreeGamesController < ApplicationController
   #   end
   # end
 
-  # DELETE /Drmfreegames/1
-  # DELETE /Drmfreegames/1.json
+  # DELETE /drmfreegames/1
+  # DELETE /drmfreegames/1.json
   def destroy
     @drmfreegames.destroy :id
     respond_to do |format|
@@ -64,11 +64,11 @@ class DrmFreeGamesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_drmfreegame
-      @drmfreegames = DrmFreeGames.find(params[:id])
+      @drmfreegames = DrmFreeGame.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def drmfreegame_params
-      params[:DrmFreeGames]
+      params[:drmFreeGames]
     end
 end

@@ -1,0 +1,34 @@
+<h1>eBooks</h1>
+<div class="pull-left">
+    <button ng-click="tableParams.sorting({'title':'asc'});tableParams.filter({});" class="btn btn-default">Restore Defaults</button><br/>
+</div>
+<div class="pull-right">
+    <ul class="nav nav-pills">
+        <li class="active">
+            <a><span class="badge pull-right">{{ uniqueEbooks() }}</span>eBooks</a>
+        </li>
+    </ul>
+</div>
+<table ng-table="tableParams" show-filter="true" class="table table-responsive table-striped table-condensed table-hover">
+    <tbody ng-repeat="group in $groups">
+        <tr class="ng-table-group">
+            <td colspan="{{$columns.length}}">
+                <a href="" ng-click="group.$hideRows = !group.$hideRows">
+                    <span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
+                    <strong>{{ group.value }}</strong>
+                </a>
+            </td>
+        </tr>
+        <tr ng-hide="group.$hideRows" ng-repeat="ebook in group.data">
+            <td data-title="'Title'" sortable="'title'" filter="{ 'title': 'text' }"><a ui-sref="ebookView({titleSlug: ebook.title_slug})">{{ ebook.title }}</a></td>
+            <td data-title="'Dev'" sortable="'dev'" filter="{ 'dev': 'text' }">{{ ebook.dev }}</td>
+            <td data-title="'Format'" sortable="'format'" filter="{ 'format': 'text' }">{{ ebook.format }}</td>
+            <td data-title="'HTTP DL'"><a href="{{ebook.http}}">Download</a></td>
+            <td data-title="'BT DL'"><a href="{{ebook.bt}}">Download</a></td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="alert alert-warning text-center" data-ng-show="ebooks.length == 0">
+    <h2>No eBooks matching those filters... Sorry!</h2>
+</div>

@@ -7,5 +7,6 @@ Rails.application.routes.draw do
     resources :musictracks
     resources :drm_free_games
     resources :androidgames
+    resources :ebooks
   end
 end

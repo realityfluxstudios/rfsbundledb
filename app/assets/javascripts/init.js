@@ -45,6 +45,11 @@ var RFSBundleDB = angular.module("RFSBundleDB", ['ng', 'ngResource', 'ui.router'
                 templateUrl: '/templates/androidgames/index.html',
                 controller: 'AndroidGamesIndexCtrl'
             })
+            .state('ebooks', {
+                url: '/ebooks',
+                templateUrl: '/templates/ebooks/index.html',
+                controller: 'EbooksIndexCtrl'
+            })
             .state('home', {
                 url: '/',
                 templateUrl: '/templates/index.html',
