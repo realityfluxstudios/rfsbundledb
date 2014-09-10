@@ -3,7 +3,6 @@
 
     "dependencies": {
         "angular-xeditable": "*",
-        "jsoneditor": "*",
         "ng-table": "*",
         "bootstrap": "*"
     }

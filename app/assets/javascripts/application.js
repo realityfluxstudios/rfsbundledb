@@ -5,11 +5,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap/dist/js/bootstrap
-//= require jsoneditor/jsoneditor
-//= require jsoneditor/asset/ace/ace
-//= require jsoneditor/asset/jsonlint/jsonlint
 //= require ngStorage
 //= require angular-xeditable/dist/js/xeditable
 //= require ng-table/ng-table
-//= require importer
 //= require app

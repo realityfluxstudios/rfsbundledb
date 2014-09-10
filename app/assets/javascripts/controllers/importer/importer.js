@@ -1,4 +1,0 @@
-var importer = {
-  importer : true
-
-};
