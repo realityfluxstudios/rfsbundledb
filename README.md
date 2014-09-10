@@ -21,13 +21,11 @@ up if you are using the same OS)
 Importing Data
 ==============
 
-~~I was trying to create a form within the website that allows the pasting of the JSON and clicking a button to import the 
+I was trying to create a form within the website that allows the pasting of the JSON and clicking a button to import the 
 data. Initially I wrote a rake task to import my JSON files into the database. I think that is the best way to import data.
-There is currently no checking for duplicate entries in the database. I will work on this for the Humble Bundle data.~~
- 
- To import date you must use the rake task I wrote. the command is `rake import_hb['/full/path/to/file.json']` or 
- `rake import_ig['/full/path/to/file.json']`. This rake task will always be up to date with the latest schema. if there are
- any errors please report them via the issues. 
+There is currently no checking for duplicate entries in the database. I will work on this for the Humble Bundle data. The command 
+is `rake import_hb['/full/path/to/file.json']`, `rake import_ig['/full/path/to/file.json']`, or `rake import_bs['/full/path/to/file.json']`. 
+This rake task will always be up to date with the latest schema. if there are any errors please report them via the issues. 
 
 Indie Gala
 ==========
@@ -48,4 +46,9 @@ Humble Bundle
 With HumbleBundle it's pretty much the same thing. The main library page is ALL of the DRM free files. This can be scraped
 as well and I will be using this data as a way to update all the URLs for the drm free stuff in the database. As it stands
 right now (Sept 10) it will not detect duplicates. This same information is given within the individual bundles. I prefer
-to get the information from the bundles first and then use the main library page to update the urls as needed (eventually). 
+to get the information from the bundles first and then use the main library page to update the urls as needed (eventually).
+ 
+Bundle Stars
+============
+This site makes it a little more difficult to harvest the information. It is completely doable and I wrote a rake task to
+import the JSON created by the bookmarklet.
