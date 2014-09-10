@@ -6,4 +6,6 @@ json.array!(@androidgames) do |androidgame|
   json.dev_url androidgame.dev_url
   json.bundle androidgame.bundle.title.truncate(40)
   json.format androidgame.format
+  json.http androidgame.http
+  json.bt androidgame.bt
 end

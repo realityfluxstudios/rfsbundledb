@@ -16,7 +16,7 @@ RFSBundleDB.controller('EbooksIndexCtrl',  function($rootScope, $scope, $filter,
 
         $scope.tableParams = new ngTableParams({
             page: 1,            // show first page
-            count: 10,           // count per page
+            count: 12,           // count per page
             sorting: {
                 title: 'asc'     // initial sorting
             }
@@ -38,7 +38,7 @@ RFSBundleDB.controller('EbooksIndexCtrl',  function($rootScope, $scope, $filter,
                 $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
 
             },
-            counts: [5,10,25,50,100]
+            counts: [12,15,25,50,100]
         });
 
         // hacky but this is needed to reload the table after the json is retrieved.

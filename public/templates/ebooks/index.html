@@ -21,7 +21,7 @@
         </tr>
         <tr ng-hide="group.$hideRows" ng-repeat="ebook in group.data">
             <td data-title="'Title'" sortable="'title'" filter="{ 'title': 'text' }"><a ui-sref="ebookView({titleSlug: ebook.title_slug})">{{ ebook.title }}</a></td>
-            <td data-title="'Dev'" sortable="'dev'" filter="{ 'dev': 'text' }">{{ ebook.dev }}</td>
+            <td data-title="'Developer'" sortable="'dev'" filter="{ 'dev': 'text' }">{{ ebook.dev }}</td>
             <td data-title="'Format'" sortable="'format'" filter="{ 'format': 'text' }">{{ ebook.format }}</td>
             <td data-title="'HTTP DL'"><a href="{{ebook.http}}">Download</a></td>
             <td data-title="'BT DL'"><a href="{{ebook.bt}}">Download</a></td>

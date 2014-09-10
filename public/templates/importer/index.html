@@ -1,150 +1,22 @@
-<div class="portlet ">
-    <div class="portlet-title">
-        <div class="caption">
-            Paste JSON
-        </div>
-        <div class="tools">
-            <a href="" id="collapse-import-textarea" class="collapse"></a>
-        </div>
-    </div>
-    <div class="portlet-body form" style="display: block;">
-        <form class="form-horizontal" role="form">
-            <div class="form-body">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <textarea class="form-control" rows="15"></textarea>
-                    </div>
+<h1>Import Data <button class="btn btn-info" id="loadForm" onClick="JSONEO.run();$('#moreInfo').show();$('#loadForm').remove()">Load Form</button></h1>
+<div style="display:none;" id="moreInfo">
+    <button class="btn btn-primary btn-block">Import JSON</button>
+    <p>
+        Simply paste your JSON into the left text box. Click the format button (button on the far left) and verify the data a little bit. Once you are satisfied with it. Click the Import JSON button and it will be saved to the database.
+    </p>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <div style="height:600px; width:100%" id="codeEditor"></div>
+                </div>
+                <div class="col-md-6">
+                    <div style="height:600px; width:100%" id="treeEditor"></div>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 
-        <!-- BUNDLE INFO -->
-<div class="row ui-sortable" id="sortable_portlets">
-<div class="col-md-4 column sortable">
-    <!-- BEGIN Portlet PORTLET-->
-    <div class="portlet portlet-sortable">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="fa fa-reorder"></i>Portlet
-            </div>
-        </div>
-        <div class="portlet-body">
-            <div>
-                Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Duis mollis.
-            </div>
-        </div>
-    </div>
-    <!-- END Portlet PORTLET-->
-    <!-- BEGIN Portlet PORTLET-->
-    <div class=" portlet portlet-sortable">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="fa fa-reorder"></i>Portlet
-            </div>
-        </div>
-        <div class="portlet-body">
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Duis mollis.
-        </div>
-    </div>
-    <!-- END Portlet PORTLET-->
-    <!-- BEGIN Portlet PORTLET-->
-    <div class=" portlet portlet-sortable">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="fa fa-reorder"></i>Portlet
-            </div>
-        </div>
-        <div class="portlet-body">
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Duis mollis.
-        </div>
-    </div>
-    <!-- END Portlet PORTLET-->
-    <div class="portlet portlet-sortable-empty">
-    </div>
-</div>
-<div class="col-md-4 column sortable">
-    <!-- BEGIN Portlet PORTLET-->
-    <div class=" portlet portlet-sortable">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="fa fa-reorder"></i>Portlet
-            </div>
-        </div>
-        <div class="portlet-body">
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.Duis mollis.
-        </div>
-    </div>
-    <!-- END Portlet PORTLET-->
-    <!-- BEGIN Portlet PORTLET-->
-    <div class="portlet portlet-sortable">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="fa fa-reorder"></i>Portlet
-            </div>
-            <div class="tools">
-                <a href="javascript:;" class="collapse"></a>
-            </div>
-        </div>
-        <div class="portlet-body">
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.Duis mollis.
-        </div>
-    </div>
-    <!-- END Portlet PORTLET-->
-    <!-- BEGIN Portlet PORTLET-->
-    <div class=" portlet portlet-sortable">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="fa fa-reorder"></i>Portlet
-            </div>
-        </div>
-        <div class="portlet-body">
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Duis mollis.
-        </div>
-    </div>
-    <!-- END Portlet PORTLET-->
-    <div class="portlet portlet-sortable-empty">
-    </div>
-</div>
-<div class="col-md-4 column sortable" style="margin-bottom:20px;">
-    <!-- BEGIN Portlet PORTLET-->
-    <div class=" portlet portlet-sortable">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="fa fa-reorder"></i>Portlet
-            </div>
-        </div>
-        <div class="portlet-body">
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Duis mollis.
-        </div>
-    </div>
-    <!-- END Portlet PORTLET-->
-    <!-- BEGIN Portlet PORTLET-->
-    <div class=" portlet portlet-sortable">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="fa fa-reorder"></i>Portlet
-            </div>
-        </div>
-        <div class="portlet-body">
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentumDuis mollis, est non commodo luctus.
-        </div>
-    </div>
-    <!-- END Portlet PORTLET-->
-    <!-- BEGIN Portlet PORTLET-->
-    <div class=" portlet portlet-sortable">
-        <div class="portlet-title">
-            <div class="caption">
-                <i class="fa fa-reorder"></i>Portlet
-            </div>
-        </div>
-        <div class="portlet-body">
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Duis mollis.
-        </div>
-    </div>
-    <!-- END Portlet PORTLET-->
-    <div class="portlet portlet-sortable-empty">
-    </div>
-</div>
-</div>

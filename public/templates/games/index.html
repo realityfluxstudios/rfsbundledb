@@ -15,7 +15,7 @@
 
 <table ng-table="tableParams" show-filter="true" class="table table-responsive table-striped table-condensed table-hover">
     <tr ng-repeat="game in $data">
-        <td data-title="'Title'" sortable="'title'" filter="{ 'title': 'text' }"><a ui-sref="gameView({titleSlug: game.title_slug})" data-toggle="tooltip" data-placement="left" title="{{ game.title }}">{{ game.title }}</a></td>
+        <td data-title="'Title'" sortable="'title'" filter="{ 'title': 'text' }"><a ui-sref="gameView({titleSlug: game.title_slug})">{{ game.title }}</a></td>
         <td data-title="'Bundle'" sortable="'bundle'" filter="{ 'bundle': 'text' }">{{ game.bundle }}</td>
         <td data-title="'DRM'" sortable="'drm'" filter="{ 'drm': 'text' }"><span ng-show="game.drm == null">Unknown</span>{{ game.drm }}</td>
         <td data-title="'Game Keys'" sortable="'gamekeys_count'" filter="{ 'gamekeys_count': 'text' }">{{ game.gamekeys_count }}</td>
