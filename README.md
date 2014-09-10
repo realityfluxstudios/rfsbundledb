@@ -21,14 +21,18 @@ up if you are using the same OS)
 Importing Data
 ==============
 
-I was trying to create a form within the website that allows the pasting of the JSON and clicking a button to import the 
+~~I was trying to create a form within the website that allows the pasting of the JSON and clicking a button to import the 
 data. Initially I wrote a rake task to import my JSON files into the database. I think that is the best way to import data.
-There is currently no checking for duplicate entries in the database. I will work on this for the Humble Bundle data. 
+There is currently no checking for duplicate entries in the database. I will work on this for the Humble Bundle data.~~
+ 
+ To import date you must use the rake task I wrote. the command is `rake import_hb['/full/path/to/file.json']` or 
+ `rake import_ig['/full/path/to/file.json']`. This rake task will always be up to date with the latest schema. if there are
+ any errors please report them via the issues. 
 
 Indie Gala
 ==========
 
-Nothing special for this site. It is pretty straight forward. Go to each gift url and click the bookmarklet. For multiple
+Nothing special for this site. It is pretty straight forward. Go to each gift url and click the RFS Bundle Scraper bookmarklet. For multiple
 copies of a single bundle just go to the subsequent gift urls and open the bookmarklet again. It will automatically 
 combine the data properly. 
 
