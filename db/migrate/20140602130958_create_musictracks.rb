@@ -2,7 +2,9 @@ class CreateMusictracks < ActiveRecord::Migration
   def change
     create_table :musictracks do |t|
       t.string :title
+      t.string :title_raw
       t.string :title_slug
+      t.string :title_slug_raw
       t.string :dev
       t.string :dev_slug
       t.string :dev_url

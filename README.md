@@ -47,8 +47,31 @@ With HumbleBundle it's pretty much the same thing. The main library page is ALL 
 as well and I will be using this data as a way to update all the URLs for the drm free stuff in the database. As it stands
 right now (Sept 10) it will not detect duplicates. This same information is given within the individual bundles. I prefer
 to get the information from the bundles first and then use the main library page to update the urls as needed (eventually).
- 
+
+_The rake tasks now detect entries already in the database and simply updates the HTTP and BT urls that expire after about a week.
+And this is only required for the DRM free items, of course, which means everything listed on the main library page. So it is
+my suggestion that you go through every single bundle you have, first, so you can get the bundle information on the DRM free
+items and then, as needed, run the bookmarklet on the library page and then run the `rake import_hb` task again to update the 
+urls as needed._
+
 Bundle Stars
 ============
 This site makes it a little more difficult to harvest the information. It is completely doable and I wrote a rake task to
 import the JSON created by the bookmarklet.
+
+Editing Data
+============
+
+This is the next major thing I will be working on and the site will basically be done once this is complete.
+
+I will be including two fields that will seem like unnecessary duplication of data, but it is required to maintain integrity
+of the data. `title_slug_raw` and `title_raw` will be unique and not modifiable at all. The `title` and `title_slug` will be able
+to be modified for aesthetic purposes and will be the ones used in URLs and displayed on the site. the `_raw` versions will
+be used internally for comparison purposes.
+
+Rake Tasks and Shell Scripts
+============================
+
+As outlined above, the way to import the JSON data gathered by the bookmarklet is via a rake task. Simply use 
+`rake import_hb['/full/path/to/json/file']` and `rake import_ig['/full/path/to/json/file']`. I wrote a shell script that will 
+loop through all the json files in the directory. Refer to the `import_all_bundles.sh` file in the `/lib/` directory. 

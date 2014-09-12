@@ -2,7 +2,9 @@ class CreateGames < ActiveRecord::Migration
   def change
     create_table :games do |t|
       t.string :title
+      t.string :title_raw
       t.string :title_slug
+      t.string :title_slug_raw
       t.string :drm
       t.string :store_url
       t.string :image_url

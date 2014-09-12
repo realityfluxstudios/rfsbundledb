@@ -2,9 +2,12 @@ class CreateEbooks < ActiveRecord::Migration
   def change
     create_table :ebooks do |t|
       t.string :title
+      t.string :title_raw
       t.string :title_slug
+      t.string :title_slug_raw
       t.string :dev
       t.string :dev_slug
+      t.string :dev_slug_raw
       t.string :size
       t.string :format
       t.string :http

@@ -15,7 +15,9 @@ ActiveRecord::Schema.define(version: 20140823122535) do
 
   create_table "androidgames", force: true do |t|
     t.string   "title"
+    t.string   "title_raw"
     t.string   "title_slug"
+    t.string   "title_slug_raw"
     t.string   "dev"
     t.string   "dev_slug"
     t.string   "dev_url"
@@ -34,7 +36,9 @@ ActiveRecord::Schema.define(version: 20140823122535) do
 
   create_table "bundles", force: true do |t|
     t.string   "title"
+    t.string   "title_raw"
     t.string   "title_slug"
+    t.string   "title_slug_raw"
     t.string   "site"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -42,7 +46,9 @@ ActiveRecord::Schema.define(version: 20140823122535) do
 
   create_table "drm_free_games", force: true do |t|
     t.string   "title"
+    t.string   "title_raw"
     t.string   "title_slug"
+    t.string   "title_slug_raw"
     t.string   "dev"
     t.string   "dev_slug"
     t.string   "dev_url"
@@ -50,6 +56,7 @@ ActiveRecord::Schema.define(version: 20140823122535) do
     t.string   "size"
     t.string   "icon"
     t.string   "http"
+    t.string   "bt"
     t.string   "platform"
     t.string   "md5_hash"
     t.integer  "bundle_id"
@@ -61,9 +68,12 @@ ActiveRecord::Schema.define(version: 20140823122535) do
 
   create_table "ebooks", force: true do |t|
     t.string   "title"
+    t.string   "title_raw"
     t.string   "title_slug"
+    t.string   "title_slug_raw"
     t.string   "dev"
     t.string   "dev_slug"
+    t.string   "dev_slug_raw"
     t.string   "size"
     t.string   "format"
     t.string   "http"
@@ -88,7 +98,9 @@ ActiveRecord::Schema.define(version: 20140823122535) do
 
   create_table "games", force: true do |t|
     t.string   "title"
+    t.string   "title_raw"
     t.string   "title_slug"
+    t.string   "title_slug_raw"
     t.string   "drm"
     t.string   "store_url"
     t.string   "image_url"
@@ -115,7 +127,9 @@ ActiveRecord::Schema.define(version: 20140823122535) do
 
   create_table "musictracks", force: true do |t|
     t.string   "title"
+    t.string   "title_raw"
     t.string   "title_slug"
+    t.string   "title_slug_raw"
     t.string   "dev"
     t.string   "dev_slug"
     t.string   "dev_url"
