@@ -2,6 +2,9 @@ desc 'Import IndieGala JSON object to database'
 task :import_ig, [:file_path] => :environment do |t, args|
 
   require 'pp'
+
+  show = true
+
   json = File.read(args['file_path'])
 
   hash = ActiveSupport::JSON.decode(json)
@@ -12,12 +15,14 @@ task :import_ig, [:file_path] => :environment do |t, args|
   b.site =  hash['site']
   b.save
 
-  puts b.title.to_s
+  if show
+    puts b.title.to_s
+  end
 
   hash['games'].each do |game|
     bundle = Bundle.last
     g = find_game(game['title_slug']) || Game.new
-    if g.title != nil
+    if g.title != nil and show
       puts g.title + ' already exists in the database'
     elsif
       g.save
@@ -27,7 +32,9 @@ task :import_ig, [:file_path] => :environment do |t, args|
       g.store_url = game['store_url']
       g.bundle_id = bundle.id
       g.save
-      puts '-' + g.title
+      if show
+        puts '-' + g.title
+      end
       game['keys'].each do |key|
         k = Gamekey.new
         k.key = key['key']
@@ -35,16 +42,21 @@ task :import_ig, [:file_path] => :environment do |t, args|
         k.game_id = g.id
         k.save
       end
-      puts '--Key Count: ' + g.gamekeys.count.to_s
+      if show
+        puts '--Key Count: ' + g.gamekeys.count.to_s
+      end
     end
   end
 
   if hash['musictracks'] != nil
-    puts '------ MUSIC TRACKS -----'
+    if show
+      puts '------ MUSIC TRACKS -----'
+    end
+
     hash['musictracks'].each do |musictrack|
       bundle = Bundle.last
       m = find_music(musictrack['mp3dllink'], 'ig') || Musictrack.new
-      if m.title != nil
+      if m.title != nil and show
         puts m.title + ' already exists in the database'
       elsif
         m.save
@@ -59,16 +71,21 @@ task :import_ig, [:file_path] => :environment do |t, args|
         m.bundle_id = bundle.id
         m.save
       end
-      puts '-' + m.title.to_s
+      if show
+        puts '-' + m.title.to_s
+      end
     end
   end
 
   if hash['drmFreeGames'] != nil
-    puts '------ DRM FREE GAMES -----'
+    if show
+      puts '------ DRM FREE GAMES -----'
+    end
+
     hash['drmFreeGames'].each do |drmfreegame|
       bundle = Bundle.last
       d = find_drmfree(drmfreegame['dllink']) || DrmFreeGame.new
-      if d.title != nil
+      if d.title != nil and show
         puts d.title + ' already exists in the database'
       else
         d.save
@@ -79,19 +96,22 @@ task :import_ig, [:file_path] => :environment do |t, args|
         d.http = drmfreegame['dllink']
         d.bundle_id = bundle.id
         d.save
-        puts '-' + d.title.to_s
+        if show
+          puts '-' + d.title.to_s
+        end
       end
-
     end
   end
 
   if hash['androidgames'] != nil
-    puts '------ ANDROID GAMES -----'
+    if show
+      puts '------ ANDROID GAMES -----'
+    end
     androidgames = hash['androidgames']
     androidgames.each do |androidgame|
       bundle = Bundle.last
       a = find_androidgame(androidgame['dllink']) || Androidgame.new
-      if a.title != nil
+      if a.title != nil and show
         puts a.title + ' already exists in the database'
       else
         a.save
@@ -100,7 +120,9 @@ task :import_ig, [:file_path] => :environment do |t, args|
         a.http = androidgame['dllink']
         a.bundle_id = bundle.id
         a.save
-        puts '-' + a.title.to_s
+        if show
+          puts '-' + a.title.to_s
+        end
       end
     end
   end
@@ -111,6 +133,9 @@ task :import_hb, [:file_path] => :environment do |t, args|
 
   require 'uri'
   require 'pp'
+
+  show = true
+
   json = File.read(args['file_path'])
 
   hash = ActiveSupport::JSON.decode(json)
@@ -121,7 +146,9 @@ task :import_hb, [:file_path] => :environment do |t, args|
   b.site =  hash['site']
   b.save
 
-  puts b.title.to_s
+  if show
+    puts b.title.to_s
+  end
 
   hash['items'].each do |item|
     bundle = Bundle.last
@@ -142,25 +169,33 @@ task :import_hb, [:file_path] => :environment do |t, args|
         k.save
         bundle.save
       end
-      puts '--Key Count'
-      puts g.gamekeys.count
-      if g.gamekeys.count == 0
+      if show
+        puts '--Key Count'
+        puts g.gamekeys.count
+      end
+      if g.gamekeys.count == 0 and show
         puts '------------------------------------------------- !!!!! PROBLEM !!!!! -------------------------------------------------'
       end
     elsif !item['platforms'].nil?
       item['platforms'].each do |platform|
         bundle = Bundle.last
         if platform['platform'].to_s == 'Android'
-          puts '---------- ANDROID ----------'
+          if show
+            puts '---------- ANDROID ----------'
+          end
           a = find_androidgame(platform['http']) || Androidgame.new
           if a.title != nil
-            puts 'AndroidGame found. Updating HTTP and BT URLs'
+            if show
+              puts 'AndroidGame found. Updating HTTP and BT URLs'
+            end
             a.http = platform['http']
             a.bt = platform['bt']
             a.save
           else
             a.save # to get the ID that we prepend to the title slug to ensure uniqueness
-            puts 'New AndroidGame.'
+            if show
+              puts 'New AndroidGame.'
+            end
             a.title_raw = a.title = item['title']
             a.title_slug = a.id.to_s + '-' + item['title_slug'].to_s.downcase + '-' + platform['type'].to_s.downcase
             a.title_slug_raw = a.title_slug = a.title_slug.parameterize
@@ -177,16 +212,22 @@ task :import_hb, [:file_path] => :environment do |t, args|
             a.save
           end
         elsif platform['platform'] == 'Mac' or platform['platform'] == 'Linux' or platform['platform'] == 'Windows'
-          puts '---------- DRM FREE ----------'
+          if show
+            puts '---------- DRM FREE ----------'
+          end
           d = find_drmfree(platform['http']) || DrmFreeGame.new
           if d.title != nil
-            puts 'DrmFreeGame found. Updating HTTP and BT URLs'
+            if show
+              puts 'DrmFreeGame found. Updating HTTP and BT URLs'
+            end
             d.http = platform['http']
             d.bt = platform['bt']
             d.save
           else
             d.save # to get the ID that we prepend to the title slug to ensure uniqueness
-            puts 'New DrmFreeGame'
+            if show
+              puts 'New DrmFreeGame'
+            end
             d.title_raw = d.title  = item['title']
             d.title_slug = d.id.to_s + '-' + item['title_slug'].to_s.downcase + '-' + platform['platform'].to_s.downcase + '-' + platform['type'].to_s.downcase
             d.title_slug_raw = d.title_slug = d.title_slug.parameterize
@@ -203,18 +244,26 @@ task :import_hb, [:file_path] => :environment do |t, args|
             d.bundle_id = bundle.id
             d.save
           end
-          puts d.title_slug
+          if show
+            puts d.title_slug
+          end
         elsif platform['platform'].to_s == 'eBook'
-          puts '---------- EBOOK ----------'
+          if show
+            puts '---------- EBOOK ----------'
+          end
           e = find_ebook(platform['http']) || Ebook.new
           if e.title != nil
-            puts 'Ebook found. Updating HTTP and BT URLs'
+            if show
+              puts 'Ebook found. Updating HTTP and BT URLs'
+            end
             e.http = platform['http']
             e.bt = platform['bt']
             e.save
           else
             e.save # to get the ID that we prepend to the title slug to ensure uniqueness
-            puts 'New eBook'
+            if show
+              puts 'New eBook'
+            end
             e.title_raw = e.title = item['title']
             e.title_slug = e.id.to_s + '-' + item['title_slug'].to_s.downcase + '-' + platform['type'].to_s.downcase
             e.title_slug_raw = e.title_slug = e.title_slug.parameterize
@@ -229,16 +278,22 @@ task :import_hb, [:file_path] => :environment do |t, args|
             e.save
           end
         elsif platform['platform'].to_s == 'Audio'
-          puts '---------- AUDIO ----------'
+          if show
+            puts '---------- AUDIO ----------'
+          end
           m = find_music(platform['http'], 'hb') || Musictrack.new
           if m.title != nil
-            puts 'Musictrack found. Updating HTTP and BT URLs'
+            if show
+              puts 'Musictrack found. Updating HTTP and BT URLs'
+            end
             m.http = platform['http']
             m.bt = platform['bt']
             m.save
           else
             m.save # to get the ID that we prepend to the title slug to ensure uniqueness
-            puts 'New Music Track'
+            if show
+              puts 'New Music Track'
+            end
             m.title_raw = m.title = item['title']
             m.title_slug_raw = m.title_slug = m.id.to_s + '-' + item['title_slug'].to_s.downcase + '-' + platform['type'].to_s.downcase.parameterize
             m.dev = item['developer']
@@ -261,12 +316,17 @@ desc 'Import Bundle Stars JSON object to database'
 task :import_bs, [:file_path] => :environment do |t, args|
 
   require 'pp'
+
+  show = true
+
   json = File.read(args['file_path'])
 
   hash = ActiveSupport::JSON.decode(json)
 
   hash.each do |bundle|
-    puts bundle['bundle_name']
+    if show
+      puts bundle['bundle_name']
+    end
     b = Bundle.new
     b.title =  bundle['bundle_name']
     b.title_slug =  bundle['bundle_slug']
@@ -275,17 +335,16 @@ task :import_bs, [:file_path] => :environment do |t, args|
 
     bundle['games'].each do |game|
       bundle = Bundle.last
-
       g = Game.new
       g.save
-
       g.title = game['game_name']
       g.title_slug = g.id.to_s + '-' + game['game_slug']
       g.drm = game['drm']
       g.bundle_id = bundle.id
       g.save
-      #puts '-' + g.title.to_s
-
+      if show
+        puts '-' + g.title.to_s
+      end
       game['keys'].each do |key|
         k = Gamekey.new
         k.key = key['key']
@@ -294,10 +353,12 @@ task :import_bs, [:file_path] => :environment do |t, args|
         k.save
         bundle.save
       end
-      #puts '--Key Count'
-      #puts g.gamekeys.count
-      if g.gamekeys.count == 0
-        #puts '------------------------------------------------- check this!!!!! -------------------------------------------------'
+      if show
+        puts '--Key Count'
+        puts g.gamekeys.count
+      end
+      if g.gamekeys.count == 0 and show
+        puts '------------------------------------------------- check this!!!!! -------------------------------------------------'
       end
     end
   end
@@ -372,4 +433,3 @@ def get_slug(slug)
   arr = slug.split('-',2)
   arr[1]
 end
-
