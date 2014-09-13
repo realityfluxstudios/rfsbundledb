@@ -1,8 +1,6 @@
 desc 'Import IndieGala JSON object to database'
 task :import_ig, [:file_path] => :environment do |t, args|
 
-  require 'pp'
-
   show = true
 
   json = File.read(args['file_path'])
@@ -132,7 +130,6 @@ desc 'Import Humble Bundle JSON object to database'
 task :import_hb, [:file_path] => :environment do |t, args|
 
   require 'uri'
-  require 'pp'
 
   show = true
 
@@ -314,8 +311,6 @@ end
 
 desc 'Import Bundle Stars JSON object to database'
 task :import_bs, [:file_path] => :environment do |t, args|
-
-  require 'pp'
 
   show = true
 
