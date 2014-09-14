@@ -1,3 +1,30 @@
+desc 'Sanitize the DB'
+task :clean_db, [:option] => :environment do |t, args|
+  option = args['option'] || 'all'
+
+  case option
+    when 'keys'
+      clean_keys
+    when 'ebooks'
+      clean_ebooks
+    when 'android'
+      clean_android
+    when 'music'
+      clean_music
+    when 'drmfree'
+      clean_drmfree
+    when 'all'
+      clean_keys
+      clean_android
+      clean_music
+      clean_drmfree
+      clean_ebooks
+    else
+      puts 'Please enter a proper parameter'
+  end
+  puts 'DONE!'
+end
+
 desc 'Import IndieGala JSON object to database'
 task :import_ig, [:file_path] => :environment do |t, args|
 
@@ -23,12 +50,20 @@ task :import_ig, [:file_path] => :environment do |t, args|
     if g.title != nil and show
       puts g.title + ' already exists in the database'
     elsif
-      g.save
+    g.save
       g.title_raw = g.title = game['title']
       g.title_slug_raw = g.title_slug = g.id.to_s + '-' + game['title_slug']
       g.drm = game['drm']
       g.store_url = game['store_url']
       g.bundle_id = bundle.id
+
+      # get steam_id from URL
+      uri = URI.parse(g.store_url)
+      host = uri.host
+      if host == 'store.steampowered.com'
+        g.steam_id = uri.path.split('/')[2]
+      end
+
       g.save
       if show
         puts '-' + g.title
@@ -57,7 +92,7 @@ task :import_ig, [:file_path] => :environment do |t, args|
       if m.title != nil and show
         puts m.title + ' already exists in the database'
       elsif
-        m.save
+      m.save
         m.title_raw = m.title = musictrack['title']
         m.title_slug_raw = m.title_slug = m.id.to_s + '-' + musictrack['title_slug']
         m.dev = musictrack['dev']
@@ -359,6 +394,33 @@ task :import_bs, [:file_path] => :environment do |t, args|
   end
 end
 
+desc 'Using the CheapSharkAPI to get price and icon'
+task :cheap_shark => :environment do
+  games = Game.all
+
+  games.each do |game|
+    if game.store_url != nil
+      uri = URI.parse(game.store_url)
+      host = uri.host
+      if host == 'store.steampowered.com'
+        url = 'http://www.cheapshark.com/api/1.0/games?steamAppID=' + game.steam_id.to_s
+        resp = Net::HTTP.get_response(URI.parse(url))
+        game_info = ActiveSupport::JSON.decode(resp.body)
+        if game_info.length != 0
+          game.cheap_shark_id =  cheapest_deal_id = game_info[0]['cheapestDealID'].to_s
+          game.cheap_shark_url = cheap_deal_url = 'http://www.cheapshark.com/api/1.0/deals?id=' + cheapest_deal_id
+          resp = Net::HTTP.get_response(URI.parse(cheap_deal_url))
+          deal_info = ActiveSupport::JSON.decode(resp.body)
+          puts deal_info['gameInfo']['retailPrice']
+          game.price = deal_info['gameInfo']['retailPrice']
+          game.image_url = deal_info['gameInfo']['thumb']
+          game.save
+        end
+      end
+    end
+  end
+end
+
 def find_game(title_slug)
   Game.all.each do |a|
     if get_slug(a.title_slug) == title_slug
@@ -402,20 +464,20 @@ def find_drmfree(url)
 end
 
 def find_music(url, site = 'hb')
-    Musictrack.all.each do |e|
-      if site == 'hb' and !e.http.nil?
-        first = URI(e.http).path
-        second = URI(url).path
-        if first == second
-          return e
-        end
-      else
-        if e.mp3dllink == url
-          return e
-        end
+  Musictrack.all.each do |e|
+    if site == 'hb' and !e.http.nil?
+      first = URI(e.http).path
+      second = URI(url).path
+      if first == second
+        return e
       end
-
+    else
+      if e.mp3dllink == url
+        return e
+      end
     end
+
+  end
   false
 end
 
@@ -427,4 +489,59 @@ end
 def get_slug(slug)
   arr = slug.split('-',2)
   arr[1]
+end
+
+def clean_keys
+  gamekeys = Gamekey.all
+  puts 'Keys #' + gamekeys.count.to_s
+  gamekeys.each do |a|
+    a.key = 'XXXX-XXXX-XXXX-XXXX'
+    a.gift_url = 'http://www.gifturl.com'
+    a.save(:validate => false)
+  end
+end
+
+def clean_ebooks
+  ebooks = Ebook.all
+  puts 'Ebooks# ' + ebooks.count.to_s
+  ebooks.each do |a|
+    a.http = 'http://www.gamedllink.here'
+    a.bt =  'http://www.gamedllink.here'
+    a.md5_hash = 'abcdefghijklmnopqrstuvwxyz1234567890'
+    a.save(:validate => false)
+  end
+end
+
+def clean_android
+  androidgames = Androidgame.all
+  puts 'Android Games# ' + androidgames.count.to_s
+  androidgames.each do |a|
+    a.http = 'http://www.gamedllink.here'
+    a.bt =  'http://www.gamedllink.here'
+    a.md5_hash = 'abcdefghijklmnopqrstuvwxyz1234567890'
+    a.save(:validate => false)
+  end
+end
+
+def clean_drmfree
+  drmfreegames = DrmFreeGame.all
+  puts 'DRM Free games# ' + drmfreegames.count.to_s
+  drmfreegames.each do |a|
+    a.http = 'http://www.gamedllink.here'
+    a.md5_hash = 'abcdefghijklmnopqrstuvwxyz1234567890'
+    a.save(:validate => false)
+  end
+end
+
+def clean_music
+  musictracks = Musictrack.all
+  puts 'Music Tracks# ' + musictracks.count.to_s
+  musictracks.each do |a|
+    a.mp3dllink = 'http://www.gamedllink.here'
+    a.flacdllink = 'http://www.gamedllink.here'
+    a.http = 'http://www.gamedllink.here'
+    a.bt = 'http://www.gamedllink.here'
+    a.md5_hash = 'abcdefghijklmnopqrstuvwxyz1234567890'
+    a.save(:validate => false)
+  end
 end

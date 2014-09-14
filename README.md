@@ -56,8 +56,8 @@ urls as needed._
 
 Bundle Stars
 ============
-This site makes it a little more difficult to harvest the information. It is completely doable and I wrote a rake task to
-import the JSON created by the bookmarklet.
+Please see the [RFSBundleScraper Wiki](https://github.com/realityfluxstudios/RFSBundleScraper/wiki/BundleStars) for more 
+information on importing data from BundleStars.
 
 Editing Data
 ============
@@ -75,3 +75,12 @@ Rake Tasks and Shell Scripts
 As outlined above, the way to import the JSON data gathered by the bookmarklet is via a rake task. Simply use 
 `rake import_hb['/full/path/to/json/file']` and `rake import_ig['/full/path/to/json/file']`. I wrote a shell script that will 
 loop through all the json files in the directory. Refer to the `import_all_bundles.sh` file in the `/lib/` directory. 
+
+There is also a rake task `rake cheap_shark` that will retrieve all the pricing information for all the steam games in 
+your database. This comes from the API of [Cheap Shark](http://www.cheapshark.com) which I highly recommend for finding the 
+best deals for any games you want. Along with the pricing information we also get the rectangular icon that is displayed
+on the steam pages. This will be used on the individual game pages on the website. 
+
+For games from bundles other than Indie Gala you can add the steam ID required to get the pricing information manually. 
+I will be adding a search feature that will query the Cheap Shark database and allow choosing of the correct result so that the
+pricing information can be retrieved.
