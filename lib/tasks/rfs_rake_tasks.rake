@@ -28,7 +28,7 @@ end
 desc 'Import IndieGala JSON object to database'
 task :import_ig, [:file_path] => :environment do |t, args|
 
-  show = true
+  show = false
 
   json = File.read(args['file_path'])
 
@@ -43,6 +43,9 @@ task :import_ig, [:file_path] => :environment do |t, args|
   if show
     puts b.title.to_s
   end
+
+  total_items = ig_count_items(hash)
+  count = 0
 
   hash['games'].each do |game|
     bundle = Bundle.last
@@ -79,6 +82,8 @@ task :import_ig, [:file_path] => :environment do |t, args|
         puts '--Key Count: ' + g.gamekeys.count.to_s
       end
     end
+    count += 1
+    percent_done(count, total_items)
   end
 
   if hash['musictracks'] != nil
@@ -108,6 +113,8 @@ task :import_ig, [:file_path] => :environment do |t, args|
         puts '-' + m.title.to_s
       end
     end
+    count += 1
+    percent_done(count, total_items)
   end
 
   if hash['drmFreeGames'] != nil
@@ -134,6 +141,8 @@ task :import_ig, [:file_path] => :environment do |t, args|
         end
       end
     end
+    count += 1
+    percent_done(count, total_items)
   end
 
   if hash['androidgames'] != nil
@@ -158,7 +167,10 @@ task :import_ig, [:file_path] => :environment do |t, args|
         end
       end
     end
+    count += 1
+    percent_done(count, total_items)
   end
+  percent_done(count, total_items)
 end
 
 desc 'Import Humble Bundle JSON object to database'
@@ -394,12 +406,18 @@ task :import_bs, [:file_path] => :environment do |t, args|
   end
 end
 
+# this is a separate process because the API calls can take time so I didn't want to bog down the import process
+# some people might not want to get the prices right away.
+# it will skip steam games that already have the price saved
 desc 'Using the CheapSharkAPI to get price and icon'
 task :cheap_shark => :environment do
+
   games = Game.all
 
+  count = 0
+
   games.each do |game|
-    if game.store_url != nil
+    if game.store_url != nil #and game.price == nil
       uri = URI.parse(game.store_url)
       host = uri.host
       if host == 'store.steampowered.com'
@@ -407,18 +425,49 @@ task :cheap_shark => :environment do
         resp = Net::HTTP.get_response(URI.parse(url))
         game_info = ActiveSupport::JSON.decode(resp.body)
         if game_info.length != 0
-          game.cheap_shark_id =  cheapest_deal_id = game_info[0]['cheapestDealID'].to_s
+          game.cheap_shark_id  = cheapest_deal_id = game_info[0]['cheapestDealID'].to_s
           game.cheap_shark_url = cheap_deal_url = 'http://www.cheapshark.com/api/1.0/deals?id=' + cheapest_deal_id
           resp = Net::HTTP.get_response(URI.parse(cheap_deal_url))
           deal_info = ActiveSupport::JSON.decode(resp.body)
-          puts deal_info['gameInfo']['retailPrice']
-          game.price = deal_info['gameInfo']['retailPrice']
+          #puts deal_info['gameInfo']['retailPrice']
+          game.price     = deal_info['gameInfo']['retailPrice']
           game.image_url = deal_info['gameInfo']['thumb']
           game.save
         end
       end
     end
+    count += 1
+    percent_done(count, games.length)
   end
+end
+
+# this task will soon be a way to download all the files automatically based on criteria or a json file
+desc 'Download a file'
+task :download, [:file_name] => :environment do |t, args|
+  path = URI(args['file_name']).path.gsub!(/^\//, '') #parses the URL passed in, gets only the path, then strips the leading '/'
+  system ("curl -L '#{args['file_name']}' > #{path}")
+end
+
+def ig_count_items(hash)
+  num = 0
+  if hash['games'] != nil
+    num += hash['games'].length
+  end
+  if hash['musictracks'] != nil
+    num += hash['musictracks'].length
+  end
+  if hash['drmFreeGames'] != nil
+    num += hash['drmFreeGames'].length
+  end
+  if hash['androidgames'] != nil
+    num += hash['androidgames'].length
+  end
+  return num
+end
+
+def percent_done(count, total_items)
+  complete = (count.to_f / total_items.to_f) * 100.0
+  puts complete.round(2).to_s + '%'
 end
 
 def find_game(title_slug)
