@@ -28,7 +28,7 @@ end
 desc 'Import IndieGala JSON object to database'
 task :import_ig, [:file_path] => :environment do |t, args|
 
-  show = false
+  show = true
 
   json = File.read(args['file_path'])
 
@@ -53,12 +53,15 @@ task :import_ig, [:file_path] => :environment do |t, args|
     if g.title != nil and show
       puts g.title + ' already exists in the database'
     elsif
-    g.save
+      g.save
+
       g.title_raw = g.title = game['title']
       g.title_slug_raw = g.title_slug = g.id.to_s + '-' + game['title_slug']
       g.drm = game['drm']
       g.store_url = game['store_url']
       g.bundle_id = bundle.id
+      g.cheapshark_done = false
+      g.steam_done = false
 
       # get steam_id from URL
       uri = URI.parse(g.store_url)
@@ -203,6 +206,8 @@ task :import_hb, [:file_path] => :environment do |t, args|
       g.title_raw = g.title = item['title']
       g.title_slug_raw = g.title_slug = g.id.to_s + '-' + item['title_slug']
       g.bundle_id = bundle.id
+      g.cheapshark_done = false
+      g.steam_done = false
       g.save
 
       item['keys'].each do |key|
@@ -410,7 +415,7 @@ end
 # some people might not want to get the prices right away.
 # it will skip steam games that already have the price saved
 desc 'Using the CheapSharkAPI to get price and icon'
-task :cheap_shark => :environment do
+task :get_prices => :environment do
 
   games = Game.all
 
@@ -420,7 +425,7 @@ task :cheap_shark => :environment do
     if game.store_url != nil #and game.price == nil
       uri = URI.parse(game.store_url)
       host = uri.host
-      if host == 'store.steampowered.com'
+      if host == 'store.steampowered.com' and !game.cheapshark_done
         url = 'http://www.cheapshark.com/api/1.0/games?steamAppID=' + game.steam_id.to_s
         resp = Net::HTTP.get_response(URI.parse(url))
         game_info = ActiveSupport::JSON.decode(resp.body)
@@ -431,9 +436,72 @@ task :cheap_shark => :environment do
           deal_info = ActiveSupport::JSON.decode(resp.body)
           #puts deal_info['gameInfo']['retailPrice']
           game.price     = deal_info['gameInfo']['retailPrice']
-          game.image_url = deal_info['gameInfo']['thumb']
+          game.app_icon = deal_info['gameInfo']['thumb']
+          game.cheapshark_done = true
           game.save
         end
+      end
+    end
+    count += 1
+    percent_done(count, games.length)
+  end
+end
+
+# this task will get even more information from the undocumented steam API about steam games.
+desc 'Retrieve more information from steam about the given game'
+task :get_steam_info => :environment do
+
+  games = Game.where("'steam_id' != 'null'")
+
+  count = 0
+  games.each do |game|
+    if game.steam_id != nil
+      url = 'http://store.steampowered.com/api/appdetails?appids=' + game.steam_id.to_s
+      resp = Net::HTTP.get_response(URI.parse(url))
+      game_info = ActiveSupport::JSON.decode(resp.body)
+
+      puts game.title
+      if game_info[game.steam_id]['success'] #and !game.steam_done
+        game.header_image = game_info[game.steam_id]['data']['header_image']
+        game.about = game_info[game.steam_id]['data']['about_the_game']
+        game.description = game_info[game.steam_id]['data']['detailed_description']
+        game.dev = game_info[game.steam_id]['data']['developers'][0]
+        game.dev_url = game_info[game.steam_id]['data']['website']
+        if game_info[game.steam_id]['data']['categories'] != nil
+          categories = game_info[game.steam_id]['data']['categories']
+          categories.each do |category|
+            cat = Category.find_by_steam_cat_id(category['id']) || Category.new
+            if cat.steam_cat_id == nil
+              cat.steam_cat_id = category['id']
+              cat.description = category['description']
+              if cat.save
+                puts 'Category ' + cat.description.to_s + ' saved!'
+              end
+            end
+            game.categories << cat
+          end
+        end
+        if game_info[game.steam_id]['data']['genres'] != nil
+          genres = game_info[game.steam_id]['data']['genres']
+          genres.each do |genre|
+            gen = Genre.find_by_steam_genre_id(genre['id']) || Genre.new
+            if gen.steam_genre_id == nil
+              gen.steam_genre_id = genre['id']
+              gen.description = genre['description']
+              if gen.save
+                puts 'Genre ' + gen.description.to_s + ' saved!'
+              end
+            end
+            game.genres << gen
+
+          end
+        end
+        game.steam_done = true
+        game.save
+
+        puts 'Updated!'
+      else
+        puts 'Skipped. API responded False'
       end
     end
     count += 1

@@ -1,15 +1,15 @@
-<!--suppress HtmlUnknownAttribute -->
 <div>
     <div class="alert alert-warning text-center" data-ng-hide="game">
         <h2>Loading Game Data...</h2>
     </div>
     <div class="page-header" ng-show="game">
-        <a class="btn btn-default" href="" ng-click="clickedLink('bundles')">Back <span class="glyphicon glyphicon-list-alt"></span></a>
-        <!--<a class="btn btn-primary" href="" ng-click="editBundle(bundle.name_slug)">Edit <span class="glyphicon glyphicon-list-pencil"></span></a>-->
-        <h1>{{ game.title }} <img src="{{ game.image_url }}"></h1>
+        <!--<a class="btn btn-default" href="" ng-click="clickedLink('bundles')">Back <span class="glyphicon glyphicon-list-alt"></span></a>-->
+        <a class="btn btn-primary" href="" ng-click="editGame(game.name_slug)">Edit <span class="glyphicon glyphicon-list-pencil"></span></a>
+        <h1>{{ game.title }} </h1>
+        <img src="{{ game.image_url }}">
         <ul>
             <li>DRM: {{game.drm}}</li>
-            <li>Value: {{game.value}}</li>
+            <li>Value: {{game.price}}</li>
             <li>Store URL: <a href="{{game.store_url}}">{{game.store_url}}</a></li>
         </ul>
     </div>

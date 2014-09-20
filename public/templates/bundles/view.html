@@ -9,25 +9,25 @@
     <dl ng-show="bundle.games" class="dl-horizontal">
         <dt>Games</dt>
         <dd ng-repeat="item in bundle.games">
-            <a ui-sref="gameView({titleSlug: item.titleSlug})">{{item.title}}</a>
+            <a ui-sref="gameView({titleSlug: item.title_slug})">{{item.title}}</a>
         </dd>
     </dl>
     <dl ng-show="bundle.androidgames" class="dl-horizontal">
         <dt>Android Games</dt>
         <dd ng-repeat="item in bundle.androidgames">
-            <a ui-sref="androidGameView({titleSlug: item.titleSlug})">{{item.title}}</a>
+            <a ui-sref="androidGameView({titleSlug: item.title_slug})">{{item.title}}</a>
         </dd>
     </dl>
     <dl ng-show="bundle.musictracks" class="dl-horizontal">
         <dt>Audio Files</dt>
         <dd ng-repeat="item in bundle.musictracks">
-            <a ui-sref="musicTrackView({titleSlug: item.titleSlug})">{{item.title}}</a>
+            <a ui-sref="musicTrackView({titleSlug: item.title_slug})">{{item.title}}</a>
         </dd>
     </dl>
     <dl ng-show="bundle.drmfreegames" class="dl-horizontal">
         <dt>DRM Free Games</dt>
         <dd ng-repeat="item in bundle.drmfreegames">
-            <a ui-sref="drmFreeGameView({titleSlug: item.titleSlug})">{{item.title}}</a>
+            <a ui-sref="drmFreeGameView({titleSlug: item.title_slug})">{{item.title}}</a> ( {{ item.platform }} )
         </dd>
     </dl>
 </div>

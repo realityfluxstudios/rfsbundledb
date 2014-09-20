@@ -7,7 +7,7 @@ RFSBundleDB.controller('BundlesViewCtrl',  function($rootScope, $location, $scop
 
         $rootScope.highlight = 'bundles';
 
-        var bundleJSON = '/bundles/' + $stateParams.titleSlug + '.json';
+        var bundleJSON = '/api/bundles/' + $stateParams.titleSlug + '.json';
 
         console.log(bundleJSON);
 

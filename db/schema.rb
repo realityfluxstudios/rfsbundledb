@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140823122535) do
+ActiveRecord::Schema.define(version: 20140920134733) do
 
   create_table "androidgames", force: true do |t|
     t.string   "title"
@@ -42,6 +42,15 @@ ActiveRecord::Schema.define(version: 20140823122535) do
     t.string   "site"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "categories", primary_key: "steam_cat_id", force: true do |t|
+    t.string "description"
+  end
+
+  create_table "categories_games", id: false, force: true do |t|
+    t.integer "category_id"
+    t.integer "game_id"
   end
 
   create_table "drm_free_games", force: true do |t|
@@ -101,13 +110,24 @@ ActiveRecord::Schema.define(version: 20140823122535) do
     t.string   "title_raw"
     t.string   "title_slug"
     t.string   "title_slug_raw"
+    t.string   "about"
+    t.string   "description"
     t.string   "drm"
+    t.string   "dev"
+    t.string   "dev_url"
+    t.string   "dev_support_url"
     t.string   "store_url"
-    t.string   "image_url"
+    t.string   "app_icon"
+    t.string   "header_image"
     t.string   "price"
     t.string   "cheap_shark_id"
     t.string   "cheap_shark_url"
+    t.boolean  "cheapshark_done"
     t.string   "steam_id"
+    t.boolean  "steam_done"
+    t.string   "paypal_transaction_id"
+    t.string   "categories"
+    t.string   "genres"
     t.integer  "bundle_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -115,10 +135,20 @@ ActiveRecord::Schema.define(version: 20140823122535) do
 
   add_index "games", ["bundle_id"], name: "index_games_on_bundle_id"
 
+  create_table "games_genres", id: false, force: true do |t|
+    t.integer "game_id"
+    t.integer "genre_id"
+  end
+
+  create_table "genres", primary_key: "steam_genre_id", force: true do |t|
+    t.string "description"
+  end
+
   create_table "giftedgamekeys", force: true do |t|
     t.integer  "game_id"
     t.text     "key"
     t.text     "gifted_to"
+    t.text     "via"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

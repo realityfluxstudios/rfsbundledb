@@ -3,13 +3,6 @@ json.extract! @bundle, :id, :title, :title_slug, :site
 json.games do |games|
   games.array! @bundle.games do |game|
     games.extract! game, :title, :title_slug
-    games.url game_url(game.title_slug)
-  end
-end
-
-json.games do |games|
-  games.array! @bundle.games do |game|
-    games.extract! game, :title, :title_slug
     games.keycount game.gamekeys.count
     games.url game_url(game.title_slug)
   end
@@ -24,8 +17,8 @@ end
 
 json.drmfreegames do |drmfreegames|
   drmfreegames.array! @bundle.drm_free_games do |drmfreegame|
-    drmfreegame.extract! drmfreegames, :title, :title_slug, :dev, :dev_slug, :dev_url, :platform
-    drmfreegame.url drm_free_game_url(drmfreegame.title_slug)
+    drmfreegames.extract! drmfreegame, :title, :title_slug, :dev, :dev_slug, :dev_url, :platform
+    drmfreegames.url drm_free_game_url(drmfreegame.title_slug)
   end
 end
 

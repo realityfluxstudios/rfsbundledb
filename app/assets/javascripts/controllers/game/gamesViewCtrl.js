@@ -4,7 +4,7 @@ RFSBundleDB.controller('GamesViewCtrl',  function($rootScope, $location, $scope,
 
         $rootScope.highlight = 'games';
 
-        $scope.loadBundle = $http.get('/games/' + $stateParams.title_slug + '.json').then(
+        $scope.loadBundle = $http.get('/api/games/' + $stateParams.titleSlug + '.json').then(
             function(result){
                 $scope.game = result.data;
             },

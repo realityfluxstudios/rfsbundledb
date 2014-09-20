@@ -67,11 +67,11 @@ class BundlesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_bundle
-      @bundle = Bundle.find_by_title_slug(params[:titleSlug])
+      @bundle = Bundle.find_by_title_slug(params[:id])
 
-      # if !@bundle.games.nil?
-      #   get_games(@bundle)
-      # end
+      if @bundle.games != nil
+        get_games(@bundle)
+      end
     end
 
     def get_games(bundle)
