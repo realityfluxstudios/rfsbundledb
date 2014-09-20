@@ -20,7 +20,8 @@ class CreateGames < ActiveRecord::Migration
       t.boolean :cheapshark_done
       t.string :steam_id
       t.boolean :steam_done
-      t.string :paypal_transaction_id
+      t.string :humblebundle_trans_id
+      t.string :paypal_trans_id
 
       t.string :categories
       t.string :genres
