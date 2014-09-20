@@ -31,9 +31,12 @@ json.cheap_shark do
   json.cs_url @game.cheap_shark_url
 end
 
-json.other do
+json.trans_ids do
   json.humblebundle_trans_id @game.humblebundle_trans_id
   json.paypal_trans_id @game.paypal_trans_id
+  json.indiegala_trans_id @game.indiegala_trans_id
+  json.bundlestars_trans_id @game.bundlestars_trans_id
+  json.googlewallet_trans_id @game.googlewallet_trans_id
 end
 
 json.gamekeys do |game_keys|

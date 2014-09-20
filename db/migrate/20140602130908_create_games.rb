@@ -22,6 +22,9 @@ class CreateGames < ActiveRecord::Migration
       t.boolean :steam_done
       t.string :humblebundle_trans_id
       t.string :paypal_trans_id
+      t.string :indiegala_trans_id
+      t.string :bundlestars_trans_id
+      t.string :googlewallet_trans_id
 
       t.string :categories
       t.string :genres
