@@ -6,6 +6,9 @@ class CreateBundles < ActiveRecord::Migration
       t.string :title_slug
       t.string :title_slug_raw
       t.string :site
+
+      t.string :paypal_transaction_id
+
       t.timestamps
     end
   end
