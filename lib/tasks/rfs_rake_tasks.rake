@@ -451,7 +451,7 @@ end
 desc 'Retrieve more information from steam about the given game'
 task :get_steam_info => :environment do
 
-  games = Game.where("'steam_id' != 'null'")
+  games = Game.all
 
   count = 0
   games.each do |game|
@@ -461,7 +461,7 @@ task :get_steam_info => :environment do
       game_info = ActiveSupport::JSON.decode(resp.body)
 
       puts game.title
-      if game_info[game.steam_id]['success'] #and !game.steam_done
+      if game_info[game.steam_id]['success'] and !game.steam_done
         game.header_image = game_info[game.steam_id]['data']['header_image']
         game.about = game_info[game.steam_id]['data']['about_the_game']
         game.description = game_info[game.steam_id]['data']['detailed_description']
