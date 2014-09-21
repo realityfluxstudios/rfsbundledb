@@ -19,5 +19,22 @@ RFSBundleDB.controller('BundlesViewCtrl',  function($rootScope, $location, $scop
                 console.log("data didn't load properly");
             }
         );
+
+        $scope.updateBundle = function() {
+            var bundle = {};
+            bundle.id = $scope.bundle.id;
+            bundle.title = $scope.bundle.title;
+            $scope.bundle.title_slug = bundle.title_slug = convertToSlug(bundle.title);
+
+            return $http.put('/api/bundles/' + bundle.id + '.json', bundle);
+        };
+
+        function convertToSlug (value) {
+            return value.toLowerCase()
+                .replace(/-+/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/[^a-z0-9-]/g, '')
+                .replace(/--+/g, '-');
+        }
     }
 );

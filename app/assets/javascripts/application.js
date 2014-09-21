@@ -8,4 +8,5 @@
 //= require ngStorage
 //= require angular-xeditable/dist/js/xeditable
 //= require ng-table/ng-table
+//= require angular-sanitize/angular-sanitize
 //= require app

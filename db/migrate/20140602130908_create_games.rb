@@ -15,6 +15,12 @@ class CreateGames < ActiveRecord::Migration
       t.string :app_icon
       t.string :header_image
       t.string :price
+      t.string :pc_reqs_min
+      t.string :pc_reqs_rec
+      t.string :mac_reqs_min
+      t.string :mac_reqs_rec
+      t.string :linux_reqs_min
+      t.string :linux_reqs_rec
       t.string :cheap_shark_id
       t.string :cheap_shark_url
       t.boolean :cheapshark_done

@@ -1,5 +1,5 @@
-var RFSBundleDB = angular.module("RFSBundleDB", ['ng', 'ngResource', 'ui.router', 'ngStorage', 'xeditable',
-    'angularUtils.directives.dirPagination', 'ngTable'])
+var RFSBundleDB = angular.module("RFSBundleDB", ['ng', 'ngResource', 'ui.router',
+                                                 'ngStorage', 'xeditable', 'ngTable', 'ngSanitize'])
     .run(function (editableOptions) {
         editableOptions.theme = 'bs3';
     })

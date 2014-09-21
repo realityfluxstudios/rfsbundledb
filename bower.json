@@ -3,6 +3,7 @@
 
     "dependencies": {
         "angular-xeditable": "*",
+        "angular-sanitize": "*",
         "ng-table": "*",
         "bootstrap": "*"
     }

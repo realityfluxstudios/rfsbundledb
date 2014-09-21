@@ -2,7 +2,7 @@ json.extract! @bundle, :id, :title, :title_slug, :site
 
 json.games do |games|
   games.array! @bundle.games do |game|
-    games.extract! game, :title, :title_slug
+    games.extract! game, :title, :title_slug, :drm, :store_url, :dev, :app_icon
     games.keycount game.gamekeys.count
     games.url game_url(game.title_slug)
   end

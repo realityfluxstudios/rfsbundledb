@@ -456,7 +456,7 @@ task :get_steam_info => :environment do
   count = 0
   games.each do |game|
     if game.steam_id != nil
-      url = 'http://store.steampowered.com/api/appdetails?appids=' + game.steam_id.to_s
+      url = 'http://store.steampowered.com/api/appdetails?appids=' + game.steam_id.to_s + '&filters=basic,developers,categories,genres'
       resp = Net::HTTP.get_response(URI.parse(url))
       game_info = ActiveSupport::JSON.decode(resp.body)
 
@@ -467,6 +467,22 @@ task :get_steam_info => :environment do
         game.description = game_info[game.steam_id]['data']['detailed_description']
         game.dev = game_info[game.steam_id]['data']['developers'][0]
         game.dev_url = game_info[game.steam_id]['data']['website']
+        game.pc_reqs_min = game_info[game.steam_id]['data']['pc_requirements']['minimum']
+        if game_info[game.steam_id]['data']['mac_requirements']['recommended'] != nil
+          game.pc_reqs_rec = game_info[game.steam_id]['data']['pc_requirements']['recommended']
+        end
+        if game_info[game.steam_id]['data']['mac_requirements']['minimum'] != nil
+          game.mac_reqs_min = game_info[game.steam_id]['data']['mac_requirements']['minimum']
+        end
+        if game_info[game.steam_id]['data']['mac_requirements']['recommended'] != nil
+          game.mac_reqs_rec = game_info[game.steam_id]['data']['mac_requirements']['recommended']
+        end
+        if game_info[game.steam_id]['data']['linux_requirements']['minimum'] != nil
+          game.linux_reqs_min  = game_info[game.steam_id]['data']['linux_requirements']['minimum']
+        end
+        if game_info[game.steam_id]['data']['recommended']['recommended'] != nil
+          game.linux_reqs_rec = game_info[game.steam_id]['data']['linux_requirements']['recommended']
+        end
         if game_info[game.steam_id]['data']['categories'] != nil
           categories = game_info[game.steam_id]['data']['categories']
           categories.each do |category|

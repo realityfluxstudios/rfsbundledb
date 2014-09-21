@@ -6,3 +6,11 @@
  *= require angular-xeditable/dist/css/xeditable.css
  *= require ng-table/ng-table.css
  */
+
+.fade-out{
+    -webkit-transition: opacity 2s ease-in-out;
+    -moz-transition: opacity 2s ease-in-out;
+    -o-transition: opacity 2s ease-in-out;
+    -ms-transition: opacity 2s ease-in-out;
+    transition: opacity 2s ease-in-out;
+}

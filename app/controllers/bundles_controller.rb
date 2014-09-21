@@ -2,7 +2,8 @@ class BundlesController < ApplicationController
 
   respond_to :json
 
-  before_action :set_bundle, only: [:show, :edit, :update, :destroy]
+  before_action :set_bundle, only: [:show, :edit, :destroy]
+  before_action :set_bundle_by_id, only: :update
 
   # GET /bundles
   # GET /bundles.json
@@ -65,6 +66,9 @@ class BundlesController < ApplicationController
   end
 
   private
+    def set_bundle_by_id
+      @bundle = Bundle.find(params[:id])
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_bundle
       @bundle = Bundle.find_by_title_slug(params[:id])
@@ -80,6 +84,6 @@ class BundlesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bundle_params
-      params[:bundle]
+      params.require(:bundle).permit(:id, :title, :title_slug)
     end
 end

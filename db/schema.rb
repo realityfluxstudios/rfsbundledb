@@ -103,6 +103,8 @@ ActiveRecord::Schema.define(version: 20140920134733) do
   create_table "gamekeys", force: true do |t|
     t.string   "key"
     t.string   "gift_url"
+    t.string   "gifted_to"
+    t.string   "via"
     t.integer  "game_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -125,6 +127,12 @@ ActiveRecord::Schema.define(version: 20140920134733) do
     t.string   "app_icon"
     t.string   "header_image"
     t.string   "price"
+    t.string   "pc_reqs_min"
+    t.string   "pc_reqs_rec"
+    t.string   "mac_reqs_min"
+    t.string   "mac_reqs_rec"
+    t.string   "linux_reqs_min"
+    t.string   "linux_reqs_rec"
     t.string   "cheap_shark_id"
     t.string   "cheap_shark_url"
     t.boolean  "cheapshark_done"
@@ -155,9 +163,9 @@ ActiveRecord::Schema.define(version: 20140920134733) do
 
   create_table "giftedgamekeys", force: true do |t|
     t.integer  "game_id"
-    t.text     "key"
-    t.text     "gifted_to"
-    t.text     "via"
+    t.string   "key"
+    t.string   "gifted_to"
+    t.string   "via"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

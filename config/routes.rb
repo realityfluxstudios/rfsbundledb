@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'home#index'
 
+  get '/api/check_steam_id/:steam_id', to: 'games#check_steam_id'
+
   scope 'api' do
     resources :bundles
     resources :games
@@ -9,4 +11,5 @@ Rails.application.routes.draw do
     resources :androidgames
     resources :ebooks
   end
+
 end

@@ -2,9 +2,9 @@ class CreateGiftedgamekeys < ActiveRecord::Migration
   def change
     create_table :giftedgamekeys do |t|
       t.integer :game_id
-      t.text :key
-      t.text :gifted_to
-      t.text :via
+      t.string :key
+      t.string :gifted_to
+      t.string :via
       t.belongs_to :game, index: true
 
       t.timestamps

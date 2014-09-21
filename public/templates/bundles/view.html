@@ -3,13 +3,13 @@
         <h2>Loading Bundle Data...</h2>
     </div>
     <div class="page-header">
-        <h1>{{ bundle.title }}</h1>
+        <h1><a href="#" buttons="no" editable-text="bundle.title" onaftersave="updateBundle()">{{ bundle.title }}</a> <small>( {{ bundle.title_slug }} )</small></h1>
     </div>
 
     <dl ng-show="bundle.games" class="dl-horizontal">
         <dt>Games</dt>
         <dd ng-repeat="item in bundle.games">
-            <a ui-sref="gameView({titleSlug: item.title_slug})">{{item.title}}</a>
+            <a ui-sref="gameView({titleSlug: item.title_slug})"> <img style="padding:3px" src="{{ item.app_icon }}"> <span ng-hide="item.app_icon">{{ item.title }}</span></a>
         </dd>
     </dl>
     <dl ng-show="bundle.androidgames" class="dl-horizontal">
