@@ -451,6 +451,8 @@ end
 desc 'Retrieve more information from steam about the given game'
 task :get_steam_info => :environment do
 
+  require 'pp'
+
   games = Game.all
 
   count = 0
@@ -462,26 +464,31 @@ task :get_steam_info => :environment do
 
       puts game.title
       if game_info[game.steam_id]['success'] and !game.steam_done
+        # pp game_info
         game.header_image = game_info[game.steam_id]['data']['header_image']
         game.about = game_info[game.steam_id]['data']['about_the_game']
         game.description = game_info[game.steam_id]['data']['detailed_description']
         game.dev = game_info[game.steam_id]['data']['developers'][0]
         game.dev_url = game_info[game.steam_id]['data']['website']
+
         game.pc_reqs_min = game_info[game.steam_id]['data']['pc_requirements']['minimum']
-        if game_info[game.steam_id]['data']['mac_requirements']['recommended'] != nil
+
+        if game_info[game.steam_id]['data']['pc_requirements'].length > 0
           game.pc_reqs_rec = game_info[game.steam_id]['data']['pc_requirements']['recommended']
         end
-        if game_info[game.steam_id]['data']['mac_requirements']['minimum'] != nil
+
+        if game_info[game.steam_id]['data']['mac_requirements'].length > 0 &&  game_info[game.steam_id]['data']['mac_requirements']['minimum'] != nil
           game.mac_reqs_min = game_info[game.steam_id]['data']['mac_requirements']['minimum']
+          if game_info[game.steam_id]['data']['mac_requirements']['recommended'] != nil
+            game.mac_reqs_rec = game_info[game.steam_id]['data']['mac_requirements']['recommended']
+          end
         end
-        if game_info[game.steam_id]['data']['mac_requirements']['recommended'] != nil
-          game.mac_reqs_rec = game_info[game.steam_id]['data']['mac_requirements']['recommended']
-        end
-        if game_info[game.steam_id]['data']['linux_requirements']['minimum'] != nil
+
+        if game_info[game.steam_id]['data']['linux_requirements'].length > 0 && game_info[game.steam_id]['data']['linux_requirements']['minimum'] != nil
           game.linux_reqs_min  = game_info[game.steam_id]['data']['linux_requirements']['minimum']
-        end
-        if game_info[game.steam_id]['data']['recommended']['recommended'] != nil
-          game.linux_reqs_rec = game_info[game.steam_id]['data']['linux_requirements']['recommended']
+          if game_info[game.steam_id]['data']['linux_requirements']['recommended'] != nil
+            game.linux_reqs_rec = game_info[game.steam_id]['data']['linux_requirements']['recommended']
+          end
         end
         if game_info[game.steam_id]['data']['categories'] != nil
           categories = game_info[game.steam_id]['data']['categories']

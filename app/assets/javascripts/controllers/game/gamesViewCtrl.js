@@ -58,12 +58,18 @@ RFSBundleDB.controller('GamesViewCtrl',  function($rootScope, $location, $scope,
         };
 
         $scope.parseReqs = function(platform) {
-            if(platform === 'pc')
-                return $sce.trustAsHtml($scope.game.steam.html.pc_reqs);
-            else if(platform === 'mac')
-                return $sce.trustAsHtml($scope.game.steam.html.mac_reqs);
-            else if(platform === 'linux')
-                return $sce.trustAsHtml($scope.game.steam.html.linux_reqs);
+            if(platform === 'pc_min')
+                return $sce.trustAsHtml($scope.game.steam.html.reqs.pc.min);
+            else if(platform === 'pc_rec')
+                return $sce.trustAsHtml($scope.game.steam.html.reqs.pc.rec);
+            else if(platform === 'mac_min')
+                return $sce.trustAsHtml($scope.game.steam.html.reqs.mac.min);
+            else if(platform === 'mac_rec')
+                return $sce.trustAsHtml($scope.game.steam.html.reqs.mac.rec);
+            else if(platform === 'linux_min')
+                return $sce.trustAsHtml($scope.game.steam.html.reqs.linux.min);
+            else if(platform === 'linux_rec')
+                return $sce.trustAsHtml($scope.game.steam.html.reqs.linux.rec);
         };
 
         $scope.fade = function(){

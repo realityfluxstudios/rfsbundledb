@@ -6,7 +6,7 @@
         <p><img src="{{ game.steam.images.header_image }}"></p>
         <p ng-bind-html="parseAbout()"></p>
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-3">
         <h2><a editable-text="game.basic.title" buttons="no" onaftersave="updateGame('title')">{{ game.basic.title }}</a> </h2>
         <p>( <a editable-text="game.basic.title_slug" buttons="no" onaftersave="updateGame('title_slug')">{{ game.basic.title_slug }}</a> )</p>
         <p ng-show="game.steam.dev_info.dev"><a href="{{game.steam.dev_info.dev_url}}">{{game.steam.dev_info.dev}}</a></p>
@@ -27,8 +27,30 @@
             </ul>
         </div>
     </div>
-    <div class="col-lg-3">
+    <div class="col-lg-4">
         <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle" onclick="return false;" data-toggle="collapse" data-target="#collapseThree" href="#">
+                            System Requirements
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <h3 ng-show="game.steam.html.reqs.pc != null">Windows</h3>
+                        <p ng-show="game.steam.html.reqs.pc.min" ng-bind-html="parseReqs('pc_min')"></p>
+                        <p ng-show="game.steam.html.reqs.pc.rec" ng-bind-html="parseReqs('pc_rec')"></p>
+                        <h3 ng-show="game.steam.html.reqs.mac.min != null">Mac</h3>
+                        <p ng-show="game.steam.html.reqs.mac.min" ng-bind-html="if(game.steam.html.reqs.mac.min != null); parseReqs('mac_min')"></p>
+                        <p ng-show="game.steam.html.reqs.mac.rec" ng-bind-html="if(game.steam.html.reqs.mac.rec != null); parseReqs('mac_rec')"></p>
+                        <h3 ng-show="game.steam.html.reqs.linux.min != null">Linux</h3>
+                        <p ng-show="game.steam.html.reqs.linux.min" ng-bind-html="if(game.steam.html.reqs.linux.min != null); parseReqs('linux_min')"></p>
+                        <p ng-show="game.steam.html.reqs.linux.rec" ng-bind-html="if(game.steam.html.reqs.linux.rec != null); parseReqs('linux_rec')"></p>
+                    </div>
+                </div>
+            </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
@@ -37,7 +59,7 @@
                         </a>
                     </h4>
                 </div>
-                <div id="collapseOne" class="panel-collapse collapse in">
+                <div id="collapseOne" class="panel-collapse collapse">
                     <div class="panel-body">
                         <ol>
                             <li ng-repeat="key in game.gamekeys">
@@ -67,25 +89,7 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a class="accordion-toggle" onclick="return false;" data-toggle="collapse" data-target="#collapseThree" href="#">
-                            Requirements
-                        </a>
-                    </h4>
-                </div>
-                <div id="collapseThree" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <h3 ng-show="game.steam.html.pc_reqs">PC System Requirements</h3>
-                        <p ng-show="game.steam.html.pc_reqs" ng-bind-html="parseReqs('pc')"></p>
-                        <h3 ng-show="game.steam.html.mac_reqs">Mac System Requirements</h3>
-                        <p ng-show="game.steam.html.mac_reqs" ng-bind-html="if(game.steam.html.mac_reqs != null); parseReqs('mac')"></p>
-                        <h3 ng-show="game.steam.html.linux_reqs">Linux System Requirements</h3>
-                        <p ng-show="game.steam.html.linux_reqs" ng-bind-html="if(game.steam.html.linux_reqs != null); parseReqs('linux')"></p>
-                    </div>
-                </div>
-            </div>
+
         </div>
 
     </div>

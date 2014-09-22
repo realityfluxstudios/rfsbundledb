@@ -12,4 +12,4 @@ do
   rake import_hb[$FILES/$f]
 done
 
-rake clean_db
+#rake clean_db

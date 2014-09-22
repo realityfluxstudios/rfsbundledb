@@ -21,12 +21,20 @@ json.steam do
   json.html do
     json.about @game.about
     json.description @game.description
-    json.pc_reqs_min @game.pc_reqs_min
-    json.pc_reqs_rec @game.pc_reqs_rec
-    json.mac_reqs_min @game.mac_reqs_min
-    json.mac_reqs_rec @game.mac_reqs_rec
-    json.linux_reqs_min @game.linux_reqs_min
-    json.linux_reqs_rec @game.linux_reqs_rec
+    json.reqs do
+      json.pc do
+        json.min @game.pc_reqs_min
+        json.rec @game.pc_reqs_rec
+      end
+      json.mac do
+        json.min @game.mac_reqs_min
+        json.rec @game.mac_reqs_rec
+      end
+      json.linux do
+        json.min @game.linux_reqs_min
+        json.rec @game.linux_reqs_rec
+      end
+    end
   end
   json.categories @game.categories
   json.genres @game.genres
