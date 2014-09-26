@@ -1,8 +1,6 @@
 RFS Bundle DB
 =============
 
-Still in development. At this point you can clone the repo then you must run `bower install`.
-    
 If you happen to use **RubyMine** (which I highly recommend as an IDE for Ruby on Rails Development) 
 you have to copy the contents of the components directory into the javascripts directory so that
 RubyMine doesn't yell at you for not being able to resolve the path to the javascript files. 
@@ -19,10 +17,9 @@ If you are not using RubyMine:
 Prerequisites
 =============
 
-* Ruby on Rails 4.1.4 check out this [You Tube](http://www.youtube.com/watch?v=ih4txNf7w_U) video for instructions on how to set up `Ruby on Rails` on windows
+* Ruby on Rails 4.1.4 check out this [YouTube Video](http://www.youtube.com/watch?v=ih4txNf7w_U) video for instructions on how to set up `Ruby on Rails` on **Windows**.
 * Ruby 2.1.2p95
 * Bower
-
 * Ubuntu (Just a recommendation, it's what I use on my web servers and I'll be able to give better support on setting this 
 up if you are using the same OS)
 
@@ -84,6 +81,10 @@ only show up in the view page if it is actually filled out.
 Rake Tasks and Shell Scripts
 ============================
 
+Use a sqlitedb viewer [Firefox Add-On](https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager/) or a 
+[Standalone SQL Browser](http://sqlitestudio.pl/?act=download) to give a quick glance at the database before running 
+these commands. This will prevent any problems that might arise when you first run them. The most obvious problem would be a missing Title.
+
 As outlined above, the way to import the JSON data gathered by the bookmarklet is via a rake task. Simply use 
 `rake import_hb['/full/path/to/json/file']` and `rake import_ig['/full/path/to/json/file']`. I wrote a shell script that will 
 loop through all the json files in the directory. Refer to the `import_all_bundles.sh` file in the `/lib/` directory. 
@@ -101,4 +102,4 @@ A new rake task is available `rake get_steam_info` will use the undocumented Ste
 games that have a valid SteamID. I am saving the detailed_description, about_the_game, developers name, developers website, 
 categories and genres as listed on steam and a few other things. This is so that I can display all this information on the games
 view page in the database site. The steam store url is available too and one can just click that link but I rather have everything 
-at a glance instead of having to open a new tab for information about a given game. 
+at a glance instead of having to open a new tab for information about a given game.  
