@@ -13,6 +13,7 @@
 # /vendor/assets/compnents as a search path for files from the application.js.
 /vendor/assets/javascripts/angular
 /vendor/assets/javascripts/angular-xeditable
+/vendor/assets/javascripts/angular-sanitize
 /vendor/assets/javascripts/bootstrap
 /vendor/assets/javascripts/jquery
 /vendor/assets/javascripts/ng-table

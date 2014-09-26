@@ -35,8 +35,8 @@ task :import_ig, [:file_path] => :environment do |t, args|
   hash = ActiveSupport::JSON.decode(json)
 
   b = Bundle.new
-  b.title_raw = b.title = hash['name']
-  b.title_slug_raw = b.title_slug = hash['name_slug']
+  b.title_raw = b.title = hash['name'] || hash['title']
+  b.title_slug_raw = b.title_slug = hash['name_slug'] || hash['title_slug']
   b.site =  hash['site']
   b.save
 
@@ -128,8 +128,10 @@ task :import_ig, [:file_path] => :environment do |t, args|
     hash['drmFreeGames'].each do |drmfreegame|
       bundle = Bundle.last
       d = find_drmfree(drmfreegame['dllink']) || DrmFreeGame.new
-      if d.title != nil and show
-        puts d.title + ' already exists in the database'
+      if d.title != nil
+        if show
+          puts d.title + ' already exists in the database'
+        end
       else
         d.save
         d.title_raw = d.title = drmfreegame['title']
@@ -452,7 +454,9 @@ desc 'Retrieve more information from steam about the given game'
 task :get_steam_info => :environment do
 
   require 'pp'
+  require 'benchmark'
 
+  time = Benchmark.realtime{
   games = Game.all
 
   count = 0
@@ -468,13 +472,18 @@ task :get_steam_info => :environment do
         game.header_image = game_info[game.steam_id]['data']['header_image']
         game.about = game_info[game.steam_id]['data']['about_the_game']
         game.description = game_info[game.steam_id]['data']['detailed_description']
-        game.dev = game_info[game.steam_id]['data']['developers'][0]
-        game.dev_url = game_info[game.steam_id]['data']['website']
+        if game_info[game.steam_id]['data']['developers'] != nil
+          game.dev = game_info[game.steam_id]['data']['developers'][0]
+        end
 
-        game.pc_reqs_min = game_info[game.steam_id]['data']['pc_requirements']['minimum']
-
+        if game_info[game.steam_id]['data']['website'] != nil
+          game.dev_url = game_info[game.steam_id]['data']['website']
+        end
         if game_info[game.steam_id]['data']['pc_requirements'].length > 0
-          game.pc_reqs_rec = game_info[game.steam_id]['data']['pc_requirements']['recommended']
+          game.pc_reqs_min = game_info[game.steam_id]['data']['pc_requirements']['minimum']
+          if game_info[game.steam_id]['data']['pc_requirements']['recommended'] != nil
+            game.pc_reqs_rec = game_info[game.steam_id]['data']['pc_requirements']['recommended']
+          end
         end
 
         if game_info[game.steam_id]['data']['mac_requirements'].length > 0 &&  game_info[game.steam_id]['data']['mac_requirements']['minimum'] != nil
@@ -530,6 +539,9 @@ task :get_steam_info => :environment do
     count += 1
     percent_done(count, games.length)
   end
+  }
+
+  puts "Elapsed time: #{time}"
 end
 
 # this task will soon be a way to download all the files automatically based on criteria or a json file

@@ -37,7 +37,7 @@
                         </a>
                     </h4>
                 </div>
-                <div id="collapseThree" class="panel-collapse collapse">
+                <div id="collapseThree" class="panel-collapse collapse in">
                     <div class="panel-body">
                         <h3 ng-show="game.steam.html.reqs.pc != null">Windows</h3>
                         <p ng-show="game.steam.html.reqs.pc.min" ng-bind-html="parseReqs('pc_min')"></p>
@@ -55,7 +55,7 @@
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a class="accordion-toggle" onclick="return false;" data-toggle="collapse" data-target="#collapseOne" href="#">
-                            Keys
+                            {{ game.gamekeys.length }} Keys
                         </a>
                     </h4>
                 </div>
