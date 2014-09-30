@@ -2,42 +2,53 @@
     <div class="alert alert-warning text-center" data-ng-hide="game">
         <h2>Loading Game Data...</h2>
     </div>
-    <div class="col-lg-5" ng-show="game">
+    <div class="col-lg-6" ng-show="game">
         <p><img src="{{ game.steam.images.header_image }}"></p>
         <p ng-bind-html="parseAbout()"></p>
     </div>
-    <div class="col-lg-3">
-        <h2><a editable-text="game.basic.title" buttons="no" onaftersave="updateGame('title')">{{ game.basic.title }}</a> </h2>
-        <p>( <a editable-text="game.basic.title_slug" buttons="no" onaftersave="updateGame('title_slug')">{{ game.basic.title_slug }}</a> )</p>
-        <p ng-show="game.steam.dev_info.dev"><a href="{{game.steam.dev_info.dev_url}}">{{game.steam.dev_info.dev}}</a></p>
-        <p ng-show="game.steam.price"><strong>Price: ${{game.steam.price}}</strong></p>
-        <p><a href="{{game.steam.store_url}}" target="_blank">{{game.steam.store_url}}</a></p>
-        <p><a href="#" editable-text="game.steam.steam_id" buttons="no" onaftersave="updateGame('steam_id')">{{ game.steam.steam_id || 'update steam id' }}</a> <span ng-show="steam_api.name" ng-class="fade()">( {{ steam_api.name }} )</span></p>
-        <p ng-show="game.steam.steam_id"><a target="_blank" href="http://www.steamcharts.com/app/{{game.steam.steam_id}}">Steam Charts</a></p>
-        <div ng-show="game.steam.categories">
-            <h3>Categories:</h3>
-            <ul style="list-style:none;">
-                <li ng-repeat="category in game.steam.categories">{{category.description}}</li>
-            </ul>
-        </div>
-        <div ng-show="game.steam.genres">
-            <h3>Genres:</h3>
-            <ul style="list-style:none;">
-                <li ng-repeat="genre in game.steam.genres">{{genre.description}}</li>
-            </ul>
-        </div>
-    </div>
-    <div class="col-lg-4">
+    <div class="col-lg-6">
         <div class="panel-group" id="accordion">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a class="accordion-toggle" onclick="return false;" data-toggle="collapse" data-target="#collapseThree" href="#">
+                        <a class="accordion-toggle" onclick="return false;" data-toggle="collapse" data-target="#collapseSteamInfo" href="#">
+                            Steam Info
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseSteamInfo" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <h2><a editable-text="game.basic.title" buttons="no" onaftersave="updateGame('title')">{{ game.basic.title }}</a> </h2>
+                        <p>( <a editable-text="game.basic.title_slug" buttons="no" onaftersave="updateGame('title_slug')">{{ game.basic.title_slug }}</a> )</p>
+                        <p ng-show="game.steam.dev_info.dev"><a href="{{game.steam.dev_info.dev_url}}">{{game.steam.dev_info.dev}}</a></p>
+                        <p ng-show="game.steam.price"><strong>Price: ${{game.steam.price}}</strong></p>
+                        <p><a href="{{game.steam.store_url}}" target="_blank">{{game.steam.store_url}}</a></p>
+                        <p><a href="#" editable-text="game.steam.steam_id" buttons="no" onaftersave="updateGame('steam_id')">{{ game.steam.steam_id || 'add steam id' }}</a> <span ng-show="steam_api.name" ng-class="fade()">( {{ steam_api.name }} )</span></p>
+                        <p ng-show="game.steam.steam_id"><a target="_blank" href="http://www.steamcharts.com/app/{{game.steam.steam_id}}">Steam Charts</a></p>
+                        <div ng-show="game.steam.categories">
+                            <h3>Categories:</h3>
+                            <ul style="list-style:none;">
+                                <li ng-repeat="category in game.steam.categories">{{category.description}}</li>
+                            </ul>
+                        </div>
+                        <div ng-show="game.steam.genres">
+                            <h3>Genres:</h3>
+                            <ul style="list-style:none;">
+                                <li ng-repeat="genre in game.steam.genres">{{genre.description}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="game.drm == 'steam'" class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle" onclick="return false;" data-toggle="collapse" data-target="#systemreqs" href="#">
                             System Requirements
                         </a>
                     </h4>
                 </div>
-                <div id="collapseThree" class="panel-collapse collapse in">
+                <div id="systemreqs" class="panel-collapse collapse">
                     <div class="panel-body">
                         <h3 ng-show="game.steam.html.reqs.pc != null">Windows</h3>
                         <p ng-show="game.steam.html.reqs.pc.min" ng-bind-html="parseReqs('pc_min')"></p>
@@ -54,12 +65,12 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a class="accordion-toggle" onclick="return false;" data-toggle="collapse" data-target="#collapseOne" href="#">
+                        <a class="accordion-toggle" onclick="return false;" data-toggle="collapse" data-target="#gamekeys" href="#">
                             {{ game.gamekeys.length }} Keys
                         </a>
                     </h4>
                 </div>
-                <div id="collapseOne" class="panel-collapse collapse">
+                <div id="gamekeys" class="panel-collapse collapse">
                     <div class="panel-body">
                         <ol>
                             <li ng-repeat="key in game.gamekeys">
@@ -72,26 +83,23 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a class="accordion-toggle" onclick="return false;" data-toggle="collapse" data-target="#collapseTwo" href="#">
+                        <a class="accordion-toggle" onclick="return false;" data-toggle="collapse" data-target="#transids" href="#">
                             Transaction IDs
                         </a>
                     </h4>
                 </div>
-                <div id="collapseTwo" class="panel-collapse collapse">
+                <div id="transids" class="panel-collapse collapse">
                     <div class="panel-body">
                         <ul style="padding:0!important;list-style:none;">
                             <li>Humble Bundle: <a href="#" editable-text="game.trans_ids.humblebundle_trans_id" buttons="no" onaftersave="updateGame('transID')">{{ game.trans_ids.humblebundle_trans_id || "No Transaction ID" }}</a></li>
                             <li>Indie Gala: <a href="#" editable-text="game.trans_ids.indiegala_trans_id" buttons="no" onaftersave="updateGame('transID')">{{ game.trans_ids.indiegala_trans_id || "No Transaction ID"  }}</a></li>
                             <li>Bundle Stars: <a href="#" editable-text="game.trans_ids.bundlestars_trans_id" buttons="no" onaftersave="updateGame('transID')">{{ game.trans_ids.bundlestars_trans_id || "No Transaction ID"  }}</a></li>
-                            <li>Paypal: <a href="#" editable-text="game.trans_ids.paypal_trans_id" buttons="no" onaftersave="updateGame('transID')">{{ game.trans_ids.paypal_trans_id || "No Transaction ID"  }}</a></li>
+                            <li>PayPal: <a href="#" editable-text="game.trans_ids.paypal_trans_id" buttons="no" onaftersave="updateGame('transID')">{{ game.trans_ids.paypal_trans_id || "No Transaction ID"  }}</a></li>
                             <li>Google Wallet: <a href="#" editable-text="game.trans_ids.googlewallet_trans_id" buttons="no" onaftersave="updateGame('transID')">{{ game.trans_ids.googlewallet_trans_id || "No Transaction ID"  }}</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
-
 </div>

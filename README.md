@@ -53,7 +53,7 @@ Rake Tasks and Shell Scripts
 ============================
 
 Use a sqlitedb viewer [Firefox Add-On](https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager/) or a 
-[Standalone SQL Browser](http://sqlitestudio.pl/?act=download) to give a quick glance at the database before running 
+[Standalone SQLite Browser](http://sqlitestudio.pl/?act=download) to give a quick glance at the database before running 
 these commands. This will prevent any problems that might arise when you first run them. The most obvious problem would be a missing Title.
 
 As outlined above, the way to import the JSON data gathered by the bookmarklet is via a rake task. Simply use 

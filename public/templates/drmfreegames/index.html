@@ -39,7 +39,7 @@
             <td data-title="'Title'" sortable="'title'" filter="{ 'title': 'text' }"><a ui-sref="drmFreeView({title_slug: game.title_slug})">{{ drmfreegame.title }} <span ng-show="drmfreegame.format">({{ drmfreegame.format }})</span></a></td>
             <td data-title="'Platform'" sortable="'platform'" filter="{ 'platform': 'text' }">{{ drmfreegame.platform }}</td>
             <td data-title="'Bundle'" sortable="'bundle'" filter="{ 'bundle': 'text' }"><a href="{{drmfreegame.bundle_url}}">{{drmfreegame.bundle}}</a></td>
-            <td data-title="'HTTP Download'"><a href="{{drmfreegame.http}}">Download</a></td>
+            <td data-title="'HTTP Download'"><a href="{{drmfreegame.http}}">Download</a> <span ng-show="drmfreegame.size">( {{drmfreegame.size}} )</span></td>
         </tr>
     </tbody>
 </table>

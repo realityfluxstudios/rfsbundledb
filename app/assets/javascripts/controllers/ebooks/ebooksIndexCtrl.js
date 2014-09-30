@@ -38,7 +38,7 @@ RFSBundleDB.controller('EbooksIndexCtrl',  function($rootScope, $scope, $filter,
                 $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
 
             },
-            counts: [12,15,25,50,100]
+            counts: [10,25,50,100,500,1000]
         });
 
         // hacky but this is needed to reload the table after the json is retrieved.
@@ -47,7 +47,7 @@ RFSBundleDB.controller('EbooksIndexCtrl',  function($rootScope, $scope, $filter,
         // TODO: check on delay of $timeout
         $timeout(function(){
             $scope.tableParams.reload();
-        }, 500);
+        }, 1000);
 
         $scope.uniqueEbooks = function(){
             var i,
