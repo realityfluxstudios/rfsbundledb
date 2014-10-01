@@ -41,7 +41,7 @@ RFSBundleDB.controller('BundlesIndexCtrl', function($rootScope, $scope, $filter,
     // TODO: check on delay of $timeout
     $timeout(function(){
         $scope.tableParams.reload();
-    }, 1000);
+    }, 2000);
 
     $scope.gamesCount = function(){
         var count = 0;

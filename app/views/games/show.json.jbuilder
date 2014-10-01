@@ -3,6 +3,8 @@ json.basic do
   json.title @game.title
   json.title_slug @game.title_slug
   json.drm @game.drm
+  json.bundle_title @game.bundle.title
+  json.bundle_title_slug @game.bundle.title_slug_raw
 end
 
 json.steam do

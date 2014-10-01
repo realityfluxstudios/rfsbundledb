@@ -30,4 +30,10 @@
             <a ui-sref="drmFreeGameView({titleSlug: item.title_slug})">{{item.title}}</a> ( {{ item.platform }} )
         </dd>
     </dl>
+    <dl ng-show="bundle.ebooks" class="dl-horizontal">
+        <dt>DRM Free Games</dt>
+        <dd ng-repeat="item in bundle.ebooks">
+            <a ui-sref="ebooksView({titleSlug: item.title_slug})">{{item.title}}</a> ( {{ item.platform }} )
+        </dd>
+    </dl>
 </div>

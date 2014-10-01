@@ -28,3 +28,10 @@ json.androidgames do |androidgames|
     androidgames.url androidgame_url(androidgame.title_slug)
   end
 end
+
+json.ebooks do |ebooks|
+  ebooks.array! @bundle.ebooks do |ebook|
+    ebooks.extract! ebook, :title, :title_slug, :dev, :dev_slug, :format
+    ebooks.url ebook_url(ebook.title_slug)
+  end
+end
